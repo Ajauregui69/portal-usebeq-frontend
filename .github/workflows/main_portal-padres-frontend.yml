@@ -27,7 +27,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: .
+          path: pdist
 
   deploy:
     runs-on: ubuntu-latest
@@ -41,7 +41,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: node-app
-          path: dist
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
