@@ -44,7 +44,7 @@ jobs:
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
-        uses: azure/webapps-deploy@v4
+        uses: azure/webapps-deploy@v3
         with:
           app-name: 'portal-padres-frontend-ghgfaad8buc7fwbx' # Asegúrate que este nombre sea el de tu nueva Web App
           slot-name: 'Production'
