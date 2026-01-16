@@ -26,9 +26,9 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Required for PR comments
           action: "upload"
-          app_location: "/"          # Root of your app
-          api_location: ""           # Leave empty if no API
-          output_location: "dist"    # Vite builds here by default
+          app_location: "frontend" # App source code path relative to repository root
+          api_location: "" # API source code path - optional, leave empty for no API
+          output_location: "dist" # Built app content directory
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
@@ -39,6 +39,5 @@ jobs:
         id: closepullrequest
         uses: Azure/static-web-apps-deploy@v1
         with:
-          app_location: "frontend" # App source code path
           action: "close"
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
