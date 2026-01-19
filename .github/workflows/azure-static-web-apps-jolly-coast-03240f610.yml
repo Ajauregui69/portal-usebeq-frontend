@@ -27,6 +27,8 @@ jobs:
         env:
           # 🔥 ESTA ES LA CLAVE: variable disponible EN BUILD TIME PARA VITE
           VITE_API_URL: https://portal-usebeq-backend-app-150126-gtetf4axgae3g7cj.mexicocentral-01.azurewebsites.net/api/v1
+          # Google OAuth - poner "true" para habilitar en producción
+          VITE_GOOGLE_AUTH_ENABLED: "true"
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_JOLLY_COAST_03240F610 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
