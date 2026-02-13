@@ -14,6 +14,7 @@ export default function RegisterForm() {
     sexo: '',
   });
 
+  const [registerSuccess, setRegisterSuccess] = useState(false);
   const navigate = useNavigate();
   const { register, isLoading, error } = useAuthStore();
 
@@ -28,10 +29,36 @@ export default function RegisterForm() {
     e.preventDefault();
     const success = await register(formData);
     if (success) {
-      alert('Registro exitoso. Por favor revisa tu correo para activar tu cuenta.');
-      navigate('/login');
+      setRegisterSuccess(true);
+      setTimeout(() => navigate('/login'), 4000);
     }
   };
+
+  if (registerSuccess) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-4">
+        <div className="max-w-md w-full">
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/20 p-8 text-center">
+            <div className="flex items-center justify-center w-20 h-20 bg-emerald-100 rounded-full mx-auto mb-6">
+              <svg className="w-10 h-10 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h2 className="text-2xl font-bold text-slate-800 mb-3">Registro Exitoso</h2>
+            <p className="text-slate-600 mb-6">
+              Por favor revisa tu correo electronico para activar tu cuenta. Seras redirigido al inicio de sesion en unos segundos.
+            </p>
+            <button
+              onClick={() => navigate('/login')}
+              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg transition-all duration-300"
+            >
+              Ir a Iniciar Sesion
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-4 py-12">
@@ -314,7 +341,7 @@ export default function RegisterForm() {
 
         {/* Footer Info */}
         <p className="text-center text-slate-500 text-sm mt-8">
-          Portal Académico USEBEQ - Querétaro, México
+          Portal de Padres de Familia USEBEQ - Queretaro, Mexico
         </p>
       </div>
     </div>

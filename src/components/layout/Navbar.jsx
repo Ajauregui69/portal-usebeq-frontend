@@ -1,11 +1,19 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import useAuthStore from '../../store/authStore';
 
 export default function Navbar() {
   const { user, logout } = useAuthStore();
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
+  const [showServices, setShowServices] = useState(false);
+  const servicesRef = useRef(null);
+
+  useEffect(() => {
+    const handleClick = (e) => { if (servicesRef.current && !servicesRef.current.contains(e.target)) setShowServices(false); };
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, []);
 
   const handleLogout = () => {
     logout();
@@ -28,7 +36,7 @@ export default function Navbar() {
                 <span className="text-2xl font-black bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                   USEBEQ
                 </span>
-                <p className="text-xs text-slate-500 font-medium">Portal Académico</p>
+                <p className="text-xs text-slate-500 font-medium">Portal de Padres</p>
               </div>
             </Link>
           </div>
@@ -44,6 +52,50 @@ export default function Navbar() {
               <span className="text-slate-700 font-semibold text-sm">
                 {user?.u_nombre} {user?.u_appat}
               </span>
+            </div>
+
+            <div className="relative" ref={servicesRef}>
+              <button onClick={() => setShowServices(!showServices)}
+                className="flex items-center gap-2 px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl font-medium transition-all">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+                Servicios
+                <svg className={`w-4 h-4 transition-transform ${showServices ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+              </button>
+              {showServices && (
+                <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-slate-200 py-2 z-50">
+                  <div className="px-3 py-1.5 text-xs font-bold text-slate-400 uppercase">Tramites</div>
+                  {[
+                    { to: '/bajas-traslado', label: 'Bajas por Traslado' },
+                    { to: '/duplicado-certificado', label: 'Duplicado de Certificado' },
+                    { to: '/soluciones-en-linea', label: 'Soluciones en Linea' },
+                    { to: '/revocacion-grado', label: 'Revocacion de Grado' },
+                  ].map(item => (
+                    <Link key={item.to} to={item.to} onClick={() => setShowServices(false)}
+                      className="block px-4 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">{item.label}</Link>
+                  ))}
+                  <div className="border-t border-slate-100 my-1"></div>
+                  <div className="px-3 py-1.5 text-xs font-bold text-slate-400 uppercase">Informacion</div>
+                  {[
+                    { to: '/documentos-normativos', label: 'Documentos Normativos' },
+                    { to: '/avisos', label: 'Avisos Importantes' },
+                    { to: '/faq', label: 'Preguntas Frecuentes' },
+                    { to: '/becas', label: 'Becas' },
+                  ].map(item => (
+                    <Link key={item.to} to={item.to} onClick={() => setShowServices(false)}
+                      className="block px-4 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">{item.label}</Link>
+                  ))}
+                  <div className="border-t border-slate-100 my-1"></div>
+                  <div className="px-3 py-1.5 text-xs font-bold text-slate-400 uppercase">Otros</div>
+                  <Link to="/boeva" onClick={() => setShowServices(false)}
+                    className="block px-4 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">
+                    Verificacion de Documentos
+                  </Link>
+                  <Link to="/buzon-padres" onClick={() => setShowServices(false)}
+                    className="block px-4 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">
+                    Buzon de Padres
+                  </Link>
+                </div>
+              )}
             </div>
 
             <Link

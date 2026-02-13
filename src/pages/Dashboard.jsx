@@ -16,6 +16,7 @@ export default function Dashboard() {
   const [linkingStudent, setLinkingStudent] = useState(false);
   const [notification, setNotification] = useState(null);
   const [confirmUnlink, setConfirmUnlink] = useState(null);
+  const [linkError, setLinkError] = useState(null);
 
   const showNotification = (type, message) => {
     setNotification({ type, message });
@@ -33,23 +34,47 @@ export default function Dashboard() {
   const handleAddStudent = async (e) => {
     e.preventDefault();
     setLinkingStudent(true);
+    setLinkError(null);
+
+    if (curp.length !== 18) {
+      setLinkError('La CURP debe tener exactamente 18 caracteres.');
+      setLinkingStudent(false);
+      return;
+    }
+
+    if (!cct.trim()) {
+      setLinkError('La Clave del Centro de Trabajo (CCT) es obligatoria.');
+      setLinkingStudent(false);
+      return;
+    }
 
     try {
       const { studentAPI } = await import('../services/api');
       const response = await studentAPI.linkStudentWithCCT(curp, cct, relacion);
 
       if (response.data.success) {
-        // Refresh student list
         await fetchStudents();
         setShowAddModal(false);
         setCurp('');
         setCct('');
         setRelacion('padre');
+        setLinkError(null);
         clearError();
+        showNotification('success', 'Estudiante vinculado correctamente');
       }
     } catch (error) {
-      // Error will be shown by the error state
-      console.error('Error linking student:', error);
+      const detail = error.response?.data?.detail;
+      if (error.response?.status === 409) {
+        setLinkError(detail || 'El parentesco seleccionado ya esta vinculado con otra cuenta. Contacte a USEBEQ: epena@usebeq.edu.mx');
+      } else if (error.response?.status === 404) {
+        setLinkError('No se encontro al estudiante. Verifica que la CURP y el CCT sean correctos.');
+      } else if (error.response?.status === 400) {
+        setLinkError(detail || 'Este estudiante ya esta vinculado a tu cuenta.');
+      } else if (error.response?.status === 503) {
+        setLinkError('El servicio de USEBEQ no esta disponible en este momento. Intenta mas tarde.');
+      } else {
+        setLinkError(detail || 'Error al vincular al estudiante. Intenta nuevamente.');
+      }
     } finally {
       setLinkingStudent(false);
     }
@@ -141,14 +166,14 @@ export default function Dashboard() {
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div>
               <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-2">
-                Hola, {user?.u_nombre || 'Usuario'}
+                Bienvenido, {user?.u_nombre || 'Usuario'}
               </h1>
               <p className="text-slate-600 text-lg">
-                Portal de Gestión Académica USEBEQ
+                Portal de Padres de Familia USEBEQ
               </p>
             </div>
             <button
-              onClick={() => setShowAddModal(true)}
+              onClick={() => { setShowAddModal(true); setLinkError(null); }}
               className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg shadow-blue-500/30 transition-all duration-300 hover:scale-105"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -223,9 +248,9 @@ export default function Dashboard() {
                 </svg>
               </div>
               <div>
-                <p className="text-sm text-slate-500 font-medium">Niveles</p>
+                <p className="text-sm text-slate-500 font-medium">Vinculados</p>
                 <p className="text-2xl font-bold text-slate-800">
-                  {new Set(students.map(s => s.current_enrollment?.nivel).filter(Boolean)).size || 0}
+                  {students.length}
                 </p>
               </div>
             </div>
@@ -253,7 +278,7 @@ export default function Dashboard() {
                 Comienza vinculando un estudiante para acceder a su información académica y calificaciones
               </p>
               <button
-                onClick={() => setShowAddModal(true)}
+                onClick={() => { setShowAddModal(true); setLinkError(null); }}
                 className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-xl font-semibold shadow-lg shadow-blue-500/30 transition-all duration-300 hover:scale-105"
               >
                 Vincular mi primer estudiante
@@ -272,6 +297,42 @@ export default function Dashboard() {
         )}
       </div>
 
+      {/* Servicios y Trámites Section */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+          <h2 className="text-2xl font-bold text-slate-800 mb-6 mt-4">Servicios y Tramites</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { to: '/documentos-normativos', title: 'Documentos Normativos', desc: 'Consulta y descarga documentos oficiales', color: 'from-blue-500 to-blue-600', icon: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' },
+              { to: '/avisos', title: 'Avisos Importantes', desc: 'Novedades y comunicados oficiales', color: 'from-amber-500 to-amber-600', icon: 'M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9' },
+              { to: '/bajas-traslado', title: 'Bajas por Traslado', desc: 'Solicita baja por cambio de escuela', color: 'from-red-500 to-red-600', icon: 'M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4' },
+              { to: '/duplicado-certificado', title: 'Duplicado de Certificado', desc: 'Solicita reimpresion de certificados', color: 'from-emerald-500 to-emerald-600', icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4' },
+              { to: '/soluciones-en-linea', title: 'Soluciones en Linea', desc: 'Tramites y solicitudes digitales', color: 'from-indigo-500 to-indigo-600', icon: 'M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9' },
+              { to: '/revocacion-grado', title: 'Revocacion de Grado', desc: 'Solicita repeticion de grado escolar', color: 'from-purple-500 to-purple-600', icon: 'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15' },
+              { to: '/faq', title: 'Preguntas Frecuentes', desc: 'Respuestas a dudas comunes', color: 'from-teal-500 to-teal-600', icon: 'M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
+              { to: '/boeva', title: 'Verificacion de Documentos', desc: 'Verifica autenticidad de boletas', color: 'from-cyan-500 to-cyan-600', icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z' },
+              { to: '/becas', title: 'Becas', desc: 'Informacion sobre becas disponibles', color: 'from-pink-500 to-pink-600', icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
+              { to: '/buzon-padres', title: 'Buzon de Padres', desc: 'Envia documentos y consultas', color: 'from-rose-500 to-rose-600', icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
+            ].map((item, i) => item.external ? (
+              <a key={i} href={item.href} target="_blank" rel="noopener noreferrer" className="bg-white/80 backdrop-blur-sm rounded-2xl p-5 shadow-lg border border-white/20 hover:shadow-xl transition-all duration-300 group block">
+                <div className={`p-2.5 bg-gradient-to-br ${item.color} rounded-xl shadow-lg w-fit mb-3 group-hover:scale-110 transition-transform`}>
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} /></svg>
+                </div>
+                <h3 className="font-bold text-slate-800 text-sm mb-1">{item.title}</h3>
+                <p className="text-slate-500 text-xs">{item.desc}</p>
+                <span className="text-xs text-blue-600 mt-2 inline-flex items-center gap-1">Enlace externo <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg></span>
+              </a>
+            ) : (
+              <button key={i} onClick={() => navigate(item.to)} className="bg-white/80 backdrop-blur-sm rounded-2xl p-5 shadow-lg border border-white/20 hover:shadow-xl transition-all duration-300 group text-left">
+                <div className={`p-2.5 bg-gradient-to-br ${item.color} rounded-xl shadow-lg w-fit mb-3 group-hover:scale-110 transition-transform`}>
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} /></svg>
+                </div>
+                <h3 className="font-bold text-slate-800 text-sm mb-1">{item.title}</h3>
+                <p className="text-slate-500 text-xs">{item.desc}</p>
+              </button>
+            ))}
+          </div>
+        </div>
+
       {/* Add Student Modal */}
       {showAddModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
@@ -288,6 +349,17 @@ export default function Dashboard() {
                   </svg>
                 </button>
               </div>
+
+              {linkError && (
+                <div className="mb-4 bg-red-50 border-l-4 border-red-500 rounded-lg p-4">
+                  <div className="flex items-start">
+                    <svg className="h-5 w-5 text-red-500 mr-3 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <p className="text-red-800 text-sm font-medium">{linkError}</p>
+                  </div>
+                </div>
+              )}
 
               <form onSubmit={handleAddStudent} className="space-y-5">
                 <div>

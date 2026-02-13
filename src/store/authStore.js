@@ -27,7 +27,7 @@ const useAuthStore = create((set) => ({
       return true;
     } catch (error) {
       set({
-        error: error.response?.data?.detail || 'Login failed',
+        error: error.response?.data?.detail || 'Error al iniciar sesion. Verifica tus credenciales.',
         isLoading: false,
       });
       return false;
@@ -43,7 +43,7 @@ const useAuthStore = create((set) => ({
       return true;
     } catch (error) {
       set({
-        error: error.response?.data?.detail || 'Registration failed',
+        error: error.response?.data?.detail || 'Error al registrar la cuenta. Intenta nuevamente.',
         isLoading: false,
       });
       return false;

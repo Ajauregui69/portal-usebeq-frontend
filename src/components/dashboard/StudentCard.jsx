@@ -8,7 +8,7 @@ export default function StudentCard({ student, onUnlink, onNotification }) {
   const [downloading, setDownloading] = useState(false);
   const [showBoletaMenu, setShowBoletaMenu] = useState(false);
   const [showYearModal, setShowYearModal] = useState(false);
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear() - 1);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear() - 2);
 
   const statusConfig = {
     I: {
@@ -66,7 +66,12 @@ export default function StudentCard({ student, onUnlink, onNotification }) {
       }
     } catch (error) {
       if (onNotification) {
-        onNotification('error', 'Error al descargar la boleta: ' + (error.response?.data?.detail || error.message));
+        const status = error.response?.status;
+        if (status === 500 || status === 404) {
+          onNotification('error', 'El alumno no tiene boleta disponible para el ciclo seleccionado.');
+        } else {
+          onNotification('error', 'Error al descargar la boleta. Intenta nuevamente mas tarde.');
+        }
       }
     } finally {
       setDownloading(false);
@@ -83,7 +88,7 @@ export default function StudentCard({ student, onUnlink, onNotification }) {
   };
 
   const currentYear = new Date().getFullYear();
-  const yearOptions = Array.from({ length: 10 }, (_, i) => currentYear - i);
+  const yearOptions = Array.from({ length: 10 }, (_, i) => currentYear - 1 - i);
 
   return (
     <>

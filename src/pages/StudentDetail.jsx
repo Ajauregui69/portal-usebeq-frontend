@@ -15,7 +15,7 @@ export default function StudentDetail() {
   const [downloadType, setDownloadType] = useState(null);
   const [notification, setNotification] = useState(null);
   const [showYearModal, setShowYearModal] = useState(false);
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear() - 1);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear() - 2);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -63,7 +63,12 @@ export default function StudentDetail() {
       window.URL.revokeObjectURL(url);
       showNotification('success', 'Boleta descargada correctamente');
     } catch (err) {
-      showNotification('error', 'Error al descargar la boleta: ' + (err.response?.data?.detail || err.message));
+      const status = err.response?.status;
+      if (status === 500 || status === 404) {
+        showNotification('error', 'El alumno no tiene boleta disponible para el ciclo seleccionado.');
+      } else {
+        showNotification('error', 'Error al descargar la boleta. Intenta nuevamente mas tarde.');
+      }
     } finally {
       setDownloading(false);
       setDownloadType(null);
@@ -92,7 +97,7 @@ export default function StudentDetail() {
   };
 
   const currentYear = new Date().getFullYear();
-  const yearOptions = Array.from({ length: 10 }, (_, i) => currentYear - i);
+  const yearOptions = Array.from({ length: 10 }, (_, i) => currentYear - 1 - i);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
@@ -195,7 +200,7 @@ export default function StudentDetail() {
             <svg className="w-5 h-5 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
-            <span className="font-medium">Volver al Dashboard</span>
+            <span className="font-medium">Volver al Inicio</span>
           </button>
         </div>
 
@@ -269,7 +274,7 @@ export default function StudentDetail() {
                 </div>
 
                 <div className="mt-6 bg-blue-50 rounded-xl p-5 border border-blue-100">
-                  <p className="text-sm text-blue-600 font-medium mb-1">ID de Alumno</p>
+                  <p className="text-sm text-blue-600 font-medium mb-1">Matricula del Alumno</p>
                   <p className="text-lg font-bold text-blue-800">{student.IdAlumno}</p>
                 </div>
               </div>

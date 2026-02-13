@@ -169,7 +169,13 @@ export default function LoginForm() {
             </>
           )}
 
-          <div className="mt-8 text-center">
+          <div className="mt-4 text-center">
+            <Link to="/forgot-password" className="text-sm text-slate-500 hover:text-blue-600 transition-colors">
+              ¿Olvidaste tu contraseña?
+            </Link>
+          </div>
+
+          <div className="mt-4 text-center">
             <p className="text-slate-600">
               ¿No tienes cuenta?{' '}
               <Link to="/register" className="font-bold text-blue-600 hover:text-indigo-600 transition-colors">
@@ -181,7 +187,7 @@ export default function LoginForm() {
 
         {/* Footer Info */}
         <p className="text-center text-slate-500 text-sm mt-8">
-          Portal Académico USEBEQ - Querétaro, México
+          Portal de Padres de Familia USEBEQ - Queretaro, Mexico
         </p>
       </div>
     </div>

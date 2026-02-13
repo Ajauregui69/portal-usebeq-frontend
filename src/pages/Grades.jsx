@@ -71,12 +71,36 @@ export default function Grades() {
             <svg className="w-5 h-5 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
-            <span className="font-medium">Volver al Dashboard</span>
+            <span className="font-medium">Volver al Inicio</span>
           </button>
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-2">
-            Calificaciones
-          </h1>
-          {studentName && <p className="text-slate-600 text-lg">{studentName}</p>}
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            <div>
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-2">
+                Calificaciones
+              </h1>
+              {studentName && <p className="text-slate-600 text-lg">{studentName}</p>}
+            </div>
+            <button
+              onClick={async () => {
+                try {
+                  const { gradesAPI } = await import('../services/api');
+                  const res = await gradesAPI.downloadPDF(studentId);
+                  const url = window.URL.createObjectURL(new Blob([res.data], { type: 'application/pdf' }));
+                  const link = document.createElement('a');
+                  link.href = url;
+                  link.download = `calificaciones_${studentId}.pdf`;
+                  link.click();
+                  window.URL.revokeObjectURL(url);
+                } catch (err) {
+                  console.error('Error downloading PDF:', err);
+                }
+              }}
+              className="flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-5 py-2.5 rounded-xl font-semibold shadow-lg transition-all duration-300 hover:scale-105"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+              Descargar PDF
+            </button>
+          </div>
         </div>
 
         {/* Error */}
