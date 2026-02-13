@@ -67,7 +67,9 @@ export default function RevocacionGrado() {
       });
       setResult({ success: res.data.success, message: res.data.message, folio: res.data.folio });
     } catch (err) {
-      setResult({ success: false, message: err.response?.data?.detail || 'Error al registrar solicitud' });
+      const detail = err.response?.data?.detail;
+      const message = Array.isArray(detail) ? detail.map(e => e.msg).join('. ') : (typeof detail === 'string' ? detail : 'Error al registrar solicitud');
+      setResult({ success: false, message });
     } finally { setIsSubmitting(false); }
   };
 
@@ -80,7 +82,9 @@ export default function RevocacionGrado() {
       const res = await tramitesAPI.consultarEstatusRevocacion(folio.trim());
       setStatusResult({ success: true, data: res.data });
     } catch (err) {
-      setStatusResult({ success: false, message: err.response?.data?.detail || 'No se encontro solicitud' });
+      const detail = err.response?.data?.detail;
+      const message = Array.isArray(detail) ? detail.map(e => e.msg).join('. ') : (typeof detail === 'string' ? detail : 'No se encontro solicitud');
+      setStatusResult({ success: false, message });
     } finally { setIsSearching(false); }
   };
 

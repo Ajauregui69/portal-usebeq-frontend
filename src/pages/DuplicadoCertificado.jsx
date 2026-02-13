@@ -16,7 +16,7 @@ export default function DuplicadoCertificado() {
   const [form, setForm] = useState({
     curp: '', nombre_alumno: '', a_paterno: '', a_materno: '', telefono: '', email: '',
     cct: '', nombre_esc: '', dom_esc: '', turno: 'MATUTINO', ciclo_terminacion: '',
-    tipo_tramite: 'CERTIFICADO_PRIMARIA', correccion: '', core: ''
+    tipo_tramite: 'CERTIFICADO DE PRIMARIA', correccion: 'NO', core: ''
   });
 
   useEffect(() => {
@@ -33,7 +33,9 @@ export default function DuplicadoCertificado() {
       const res = await certificatesAPI.request(form);
       setResult({ success: res.data.success, message: res.data.message, folio: res.data.folio, requiresPayment: res.data.requires_payment, paymentUrl: res.data.payment_url });
     } catch (err) {
-      setResult({ success: false, message: err.response?.data?.detail || 'Error al procesar la solicitud' });
+      const detail = err.response?.data?.detail;
+      const message = Array.isArray(detail) ? detail.map(e => e.msg).join('. ') : (typeof detail === 'string' ? detail : 'Error al procesar la solicitud');
+      setResult({ success: false, message });
     } finally {
       setIsSubmitting(false);
     }
@@ -48,7 +50,9 @@ export default function DuplicadoCertificado() {
       const res = await certificatesAPI.getStatus(folio.trim());
       setStatusResult({ success: true, data: res.data });
     } catch (err) {
-      setStatusResult({ success: false, message: err.response?.data?.detail || 'No se encontro solicitud con este folio' });
+      const detail = err.response?.data?.detail;
+      const message = Array.isArray(detail) ? detail.map(e => e.msg).join('. ') : (typeof detail === 'string' ? detail : 'No se encontro solicitud con este folio');
+      setStatusResult({ success: false, message });
     } finally {
       setIsSearching(false);
     }
@@ -85,9 +89,9 @@ export default function DuplicadoCertificado() {
                 <label className="block text-sm font-semibold text-slate-700 mb-2">Tipo de Certificado</label>
                 <select name="tipo_tramite" value={form.tipo_tramite} onChange={handleChange}
                   className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                  <option value="CERTIFICADO_PREESCOLAR">Preescolar</option>
-                  <option value="CERTIFICADO_PRIMARIA">Primaria</option>
-                  <option value="CERTIFICADO_SECUNDARIA">Secundaria</option>
+                  <option value="CERTIFICADO DE PREESCOLAR">Preescolar</option>
+                  <option value="CERTIFICADO DE PRIMARIA">Primaria</option>
+                  <option value="CERTIFICADO DE SECUNDARIA">Secundaria</option>
                 </select>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
