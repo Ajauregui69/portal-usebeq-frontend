@@ -94,6 +94,20 @@ export default function Navbar() {
                     className="block px-4 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">
                     Buzon de Padres
                   </Link>
+                  <div className="border-t border-slate-100 my-1"></div>
+                  <div className="px-3 py-1.5 text-xs font-bold text-slate-400 uppercase">Enlaces USEBEQ</div>
+                  {[
+                    { href: 'https://www.usebeq.edu.mx/PaginaWEB/', label: 'Pagina Oficial USEBEQ' },
+                    { href: 'https://www.usebeq.edu.mx/PaginaWeb/Home/MiCorreoInstitucional', label: 'Mi Correo Institucional' },
+                    { href: 'https://said.usebeq.edu.mx/', label: 'Preinscripciones (SAID)' },
+                    { href: 'https://www.usebeq.edu.mx/PaginaWEB/encuestas/evaluacionServicioSGC', label: 'Evaluacion del Servicio' },
+                  ].map(item => (
+                    <a key={item.href} href={item.href} target="_blank" rel="noopener noreferrer" onClick={() => setShowServices(false)}
+                      className="flex items-center justify-between px-4 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">
+                      {item.label}
+                      <svg className="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                    </a>
+                  ))}
                 </div>
               )}
             </div>
