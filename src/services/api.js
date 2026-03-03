@@ -74,6 +74,9 @@ export const studentAPI = {
     params: { curp, cct, relacion }
   }),
   unlinkStudent: (studentId) => api.delete(`/students/unlink-student/${studentId}`),
+  confirmSibling: (al_id, her_id) => api.post('/students/confirm-sibling', null, {
+    params: { al_id, her_id }
+  }),
 };
 
 // USEBEQ External API

@@ -17,6 +17,8 @@ export default function Dashboard() {
   const [notification, setNotification] = useState(null);
   const [confirmUnlink, setConfirmUnlink] = useState(null);
   const [linkError, setLinkError] = useState(null);
+  const [pendingSiblings, setPendingSiblings] = useState(null); // { newStudentId, siblings: [{al_id, nombre}] }
+  const [confirmingSiblings, setConfirmingSiblings] = useState(false);
 
   const showNotification = (type, message) => {
     setNotification({ type, message });
@@ -61,6 +63,14 @@ export default function Dashboard() {
         setLinkError(null);
         clearError();
         showNotification('success', 'Estudiante vinculado correctamente');
+
+        // If potential siblings detected, prompt the user
+        if (response.data.siblings?.length > 0) {
+          setPendingSiblings({
+            newStudentId: response.data.student?.al_id,
+            siblings: response.data.siblings,
+          });
+        }
       }
     } catch (error) {
       const detail = error.response?.data?.detail;
@@ -77,6 +87,23 @@ export default function Dashboard() {
       }
     } finally {
       setLinkingStudent(false);
+    }
+  };
+
+  const handleConfirmSiblings = async () => {
+    if (!pendingSiblings) return;
+    setConfirmingSiblings(true);
+    try {
+      const { studentAPI } = await import('../services/api');
+      for (const sibling of pendingSiblings.siblings) {
+        await studentAPI.confirmSibling(pendingSiblings.newStudentId, sibling.al_id);
+      }
+      showNotification('success', 'Relación de hermandad registrada correctamente');
+    } catch {
+      showNotification('error', 'No se pudo registrar la relación de hermandad');
+    } finally {
+      setConfirmingSiblings(false);
+      setPendingSiblings(null);
     }
   };
 
@@ -296,6 +323,49 @@ export default function Dashboard() {
           </div>
         )}
       </div>
+
+      {/* Sibling Confirmation Modal */}
+      {pendingSiblings && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6">
+            <div className="flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mx-auto mb-4">
+              <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+            <h2 className="text-xl font-bold text-slate-800 text-center mb-2">Posibles hermanos detectados</h2>
+            <p className="text-slate-600 text-center text-sm mb-4">
+              Se encontraron estudiantes con los mismos apellidos en tu cuenta. ¿Son hermanos?
+            </p>
+            <ul className="mb-6 space-y-2">
+              {pendingSiblings.siblings.map(s => (
+                <li key={s.al_id} className="flex items-center gap-2 bg-blue-50 border border-blue-200 rounded-lg px-4 py-2 text-sm text-slate-700 font-medium">
+                  <svg className="w-4 h-4 text-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                  {s.nombre}
+                </li>
+              ))}
+            </ul>
+            <div className="flex gap-3">
+              <button
+                onClick={handleConfirmSiblings}
+                disabled={confirmingSiblings}
+                className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:from-gray-400 disabled:to-gray-500 text-white px-4 py-3 rounded-xl font-semibold transition-all"
+              >
+                {confirmingSiblings ? 'Registrando...' : 'Sí, son hermanos'}
+              </button>
+              <button
+                onClick={() => setPendingSiblings(null)}
+                disabled={confirmingSiblings}
+                className="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 px-4 py-3 rounded-xl font-semibold transition-all"
+              >
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Add Student Modal */}
       {showAddModal && (
