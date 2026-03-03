@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
 import useAuthStore from '../store/authStore';
+import { userAPI } from '../services/api';
 
 export default function Profile() {
   const navigate = useNavigate();
-  const { user, isAuthenticated } = useAuthStore();
+  const { user, isAuthenticated, loadUser } = useAuthStore();
   const [notification, setNotification] = useState(null);
+  const [isSaving, setIsSaving] = useState(false);
   const [formData, setFormData] = useState({
     u_nombre: '',
     u_appat: '',
@@ -39,15 +41,27 @@ export default function Profile() {
   };
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    if (name === 'u_tel') {
+      setFormData({ ...formData, [name]: value.replace(/[^0-9\s\-]/g, '') });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    showNotification('info', 'Esta funcionalidad estara disponible proximamente.');
+    setIsSaving(true);
+    try {
+      await userAPI.updateProfile(formData);
+      await loadUser();
+      showNotification('success', 'Informacion actualizada correctamente.');
+    } catch (error) {
+      const msg = error.response?.data?.detail || 'Error al guardar los cambios. Intenta nuevamente.';
+      showNotification('error', msg);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -210,6 +224,8 @@ export default function Profile() {
                   name="u_tel"
                   value={formData.u_tel}
                   onChange={handleChange}
+                  inputMode="numeric"
+                  maxLength={15}
                   className="w-full pl-12 pr-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 />
               </div>
@@ -239,12 +255,25 @@ export default function Profile() {
 
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-3.5 px-4 rounded-xl font-bold shadow-lg shadow-blue-500/30 transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-2"
+              disabled={isSaving}
+              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:from-slate-400 disabled:to-slate-500 disabled:cursor-not-allowed text-white py-3.5 px-4 rounded-xl font-bold shadow-lg shadow-blue-500/30 transition-all duration-300 hover:scale-[1.02] disabled:hover:scale-100 flex items-center justify-center gap-2"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              Guardar Cambios
+              {isSaving ? (
+                <>
+                  <svg className="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Guardando...
+                </>
+              ) : (
+                <>
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Guardar Cambios
+                </>
+              )}
             </button>
           </form>
         </div>
