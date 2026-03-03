@@ -2,13 +2,11 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
 import useAuthStore from '../store/authStore';
-import useStudentStore from '../store/studentStore';
 import { tramitesAPI } from '../services/api';
 
 export default function SolucionesEnLinea() {
   const navigate = useNavigate();
-  const { isAuthenticated, user } = useAuthStore();
-  const { students, fetchStudents } = useStudentStore();
+  const { isAuthenticated } = useAuthStore();
   const [activeTab, setActiveTab] = useState('nueva');
   const [tiposTramite, setTiposTramite] = useState([]);
   const [misTramites, setMisTramites] = useState([]);
@@ -18,18 +16,18 @@ export default function SolucionesEnLinea() {
   const [statusResult, setStatusResult] = useState(null);
   const [isSearching, setIsSearching] = useState(false);
   const [isLoadingTramites, setIsLoadingTramites] = useState(false);
-  const [selectedStudent, setSelectedStudent] = useState('');
-  const [form, setForm] = useState({ tipo_tramite: '', descripcion: '', telefono: '', email: '' });
+  const [form, setForm] = useState({
+    curp: '', nombre_alumno: '', a_paterno: '', a_materno: '',
+    cct: '', nombre_escuela: '', grado: '', grupo: '', turno: 'MATUTINO', ciclo_escolar: '',
+    tipo_tramite: '', descripcion: '', telefono: '', email: ''
+  });
 
   useEffect(() => {
-    if (isAuthenticated) {
-      fetchStudents();
-      loadTiposTramite();
-    }
-  }, [isAuthenticated]);
+    loadTiposTramite();
+  }, []);
 
   useEffect(() => {
-    if (activeTab === 'mis-tramites') loadMisTramites();
+    if (activeTab === 'mis-tramites' && isAuthenticated) loadMisTramites();
   }, [activeTab]);
 
   const loadTiposTramite = async () => {
@@ -52,26 +50,24 @@ export default function SolucionesEnLinea() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const student = students.find(s => s.al_id === parseInt(selectedStudent));
-    if (!student) return;
     setIsSubmitting(true);
     setResult(null);
     try {
       const res = await tramitesAPI.crearSolicitud({
-        curp: student.al_curp,
-        nombre_alumno: student.al_nombre,
-        a_paterno: student.al_appat,
-        a_materno: student.al_apmat || '',
-        cct: student.current_enrollment?.clavecct || '',
-        nombre_escuela: student.current_enrollment?.clavecct || '',
-        grado: student.current_enrollment?.eg_grado || '',
-        grupo: student.current_enrollment?.eg_grupo || '',
-        turno: student.current_enrollment?.turno || '',
-        ciclo_escolar: student.current_enrollment?.ciclo_escolar || '',
+        curp: form.curp,
+        nombre_alumno: form.nombre_alumno,
+        a_paterno: form.a_paterno,
+        a_materno: form.a_materno,
+        cct: form.cct,
+        nombre_escuela: form.nombre_escuela,
+        grado: form.grado,
+        grupo: form.grupo,
+        turno: form.turno,
+        ciclo_escolar: form.ciclo_escolar,
         tipo_tramite: form.tipo_tramite,
         descripcion: form.descripcion,
         telefono: form.telefono,
-        email: form.email || user?.u_correo || ''
+        email: form.email
       });
       setResult({ success: res.data.success, message: res.data.message, folio: res.data.folio });
     } catch (err) {
@@ -120,37 +116,75 @@ export default function SolucionesEnLinea() {
           ))}
         </div>
 
-        {activeTab === 'nueva' && !isAuthenticated && (
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-10 text-center">
-            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-            </div>
-            <h3 className="text-lg font-bold text-slate-800 mb-2">Inicia sesion para hacer una solicitud</h3>
-            <p className="text-slate-600 text-sm mb-6">Para enviar una solicitud en linea necesitas tener una cuenta y tener a tu estudiante vinculado.</p>
-            <div className="flex gap-3 justify-center">
-              <button onClick={() => navigate('/login')} className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg transition-all">
-                Iniciar Sesion
-              </button>
-              <button onClick={() => navigate('/register')} className="bg-white hover:bg-slate-50 text-slate-700 px-6 py-3 rounded-xl font-semibold border-2 border-slate-200 hover:border-blue-300 transition-all">
-                Registrarse
-              </button>
-            </div>
-          </div>
-        )}
-
-        {activeTab === 'nueva' && isAuthenticated && (
+        {activeTab === 'nueva' && (
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-8">
             <form onSubmit={handleSubmit} className="space-y-5">
-              <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">Estudiante</label>
-                <select value={selectedStudent} onChange={(e) => setSelectedStudent(e.target.value)} required
-                  className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                  <option value="">-- Seleccionar --</option>
-                  {students.map(s => <option key={s.al_id} value={s.al_id}>{s.al_nombre} {s.al_appat} - {s.al_curp}</option>)}
-                </select>
+              {/* Datos del alumno */}
+              <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wide">Datos del Alumno</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">CURP del Alumno</label>
+                  <input name="curp" value={form.curp} onChange={handleChange} maxLength={18} required placeholder="CURP (18 caracteres)"
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent uppercase" />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Nombre(s)</label>
+                  <input name="nombre_alumno" value={form.nombre_alumno} onChange={handleChange} required
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Apellido Paterno</label>
+                  <input name="a_paterno" value={form.a_paterno} onChange={handleChange} required
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Apellido Materno</label>
+                  <input name="a_materno" value={form.a_materno} onChange={handleChange}
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                </div>
               </div>
+
+              {/* Datos escolares */}
+              <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wide pt-2">Datos Escolares</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">CCT de la Escuela</label>
+                  <input name="cct" value={form.cct} onChange={handleChange} required placeholder="Ej: 22DPR0200G"
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent uppercase" />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Nombre de la Escuela</label>
+                  <input name="nombre_escuela" value={form.nombre_escuela} onChange={handleChange}
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Grado</label>
+                  <input name="grado" value={form.grado} onChange={handleChange} placeholder="Ej: 3"
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Grupo</label>
+                  <input name="grupo" value={form.grupo} onChange={handleChange} placeholder="Ej: A"
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Turno</label>
+                  <select name="turno" value={form.turno} onChange={handleChange}
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <option value="MATUTINO">Matutino</option>
+                    <option value="VESPERTINO">Vespertino</option>
+                    <option value="COMPLETO">Tiempo Completo</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Ciclo Escolar</label>
+                  <input name="ciclo_escolar" value={form.ciclo_escolar} onChange={handleChange} placeholder="Ej: 2024-2025"
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                </div>
+              </div>
+
+              {/* Solicitud */}
+              <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wide pt-2">Solicitud</h3>
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-2">Tipo de Tramite</label>
                 <select name="tipo_tramite" value={form.tipo_tramite} onChange={handleChange} required
@@ -172,10 +206,11 @@ export default function SolucionesEnLinea() {
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">Email de contacto</label>
-                  <input name="email" type="email" value={form.email} onChange={handleChange} placeholder={user?.u_correo || ''}
+                  <input name="email" type="email" value={form.email} onChange={handleChange} required
                     className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                 </div>
               </div>
+
               <button type="submit" disabled={isSubmitting}
                 className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:from-gray-400 disabled:to-gray-500 text-white px-6 py-3 rounded-xl font-semibold shadow-lg transition-all">
                 {isSubmitting ? 'Enviando...' : 'Enviar Solicitud'}
