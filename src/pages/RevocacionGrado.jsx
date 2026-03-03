@@ -22,9 +22,10 @@ export default function RevocacionGrado() {
   const [form, setForm] = useState({ motivo: '', nombre_padre: '', telefono: '', email: '' });
 
   useEffect(() => {
-    if (!isAuthenticated) { navigate('/login'); return; }
-    fetchStudents();
-  }, [isAuthenticated, navigate]);
+    if (isAuthenticated) {
+      fetchStudents();
+    }
+  }, [isAuthenticated]);
 
   useEffect(() => {
     if (activeTab === 'mis-solicitudes') loadMisRevocaciones();
@@ -92,12 +93,12 @@ export default function RevocacionGrado() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
-      <Navbar />
+      {isAuthenticated && <Navbar />}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-10">
-          <button onClick={() => navigate('/dashboard')} className="flex items-center gap-2 text-slate-600 hover:text-blue-600 mb-4 transition-colors">
+          <button onClick={() => navigate(isAuthenticated ? '/dashboard' : '/')} className="flex items-center gap-2 text-slate-600 hover:text-blue-600 mb-4 transition-colors">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-            Volver al Panel
+            {isAuthenticated ? 'Volver al Panel' : 'Volver al Inicio'}
           </button>
           <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Revocacion de Grado</h1>
           <p className="text-slate-600 mt-2">Solicita la revocacion (repeticion) de un grado escolar</p>
@@ -117,7 +118,11 @@ export default function RevocacionGrado() {
         </div>
 
         <div className="flex flex-wrap gap-2 mb-8">
-          {[{ id: 'solicitar', label: 'Solicitar Revocacion' }, { id: 'mis-solicitudes', label: 'Mis Solicitudes' }, { id: 'estatus', label: 'Consultar Estatus' }].map(tab => (
+          {[
+            { id: 'solicitar', label: 'Solicitar Revocacion' },
+            ...(isAuthenticated ? [{ id: 'mis-solicitudes', label: 'Mis Solicitudes' }] : []),
+            { id: 'estatus', label: 'Consultar Estatus' },
+          ].map(tab => (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)}
               className={`px-6 py-3 rounded-xl font-semibold transition-all ${activeTab === tab.id ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/30' : 'bg-white/80 text-slate-600 hover:bg-blue-50 border border-slate-200'}`}>
               {tab.label}
@@ -125,7 +130,27 @@ export default function RevocacionGrado() {
           ))}
         </div>
 
-        {activeTab === 'solicitar' && (
+        {activeTab === 'solicitar' && !isAuthenticated && (
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-10 text-center">
+            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+            </div>
+            <h3 className="text-lg font-bold text-slate-800 mb-2">Inicia sesion para hacer una solicitud</h3>
+            <p className="text-slate-600 text-sm mb-6">Para solicitar una revocacion de grado necesitas tener una cuenta y tener a tu estudiante vinculado.</p>
+            <div className="flex gap-3 justify-center">
+              <button onClick={() => navigate('/login')} className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg transition-all">
+                Iniciar Sesion
+              </button>
+              <button onClick={() => navigate('/register')} className="bg-white hover:bg-slate-50 text-slate-700 px-6 py-3 rounded-xl font-semibold border-2 border-slate-200 hover:border-blue-300 transition-all">
+                Registrarse
+              </button>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'solicitar' && isAuthenticated && (
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-8">
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>

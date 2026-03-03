@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
 import useAuthStore from '../store/authStore';
@@ -19,9 +19,6 @@ export default function DuplicadoCertificado() {
     tipo_tramite: 'CERTIFICADO DE PRIMARIA', correccion: 'NO', core: ''
   });
 
-  useEffect(() => {
-    if (!isAuthenticated) { navigate('/login'); return; }
-  }, [isAuthenticated, navigate]);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -62,12 +59,12 @@ export default function DuplicadoCertificado() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
-      <Navbar />
+      {isAuthenticated && <Navbar />}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-10">
-          <button onClick={() => navigate('/dashboard')} className="flex items-center gap-2 text-slate-600 hover:text-blue-600 mb-4 transition-colors">
+          <button onClick={() => navigate(isAuthenticated ? '/dashboard' : '/')} className="flex items-center gap-2 text-slate-600 hover:text-blue-600 mb-4 transition-colors">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-            Volver al Panel
+            {isAuthenticated ? 'Volver al Panel' : 'Volver al Inicio'}
           </button>
           <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Duplicado de Certificado</h1>
           <p className="text-slate-600 mt-2">Solicita la reimpresion de certificados de estudios</p>
