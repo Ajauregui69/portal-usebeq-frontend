@@ -9,7 +9,7 @@ const DOCUMENTOS = [
       {
         titulo: 'ACUERDO 10/09/23',
         descripcion: 'Por el que se establecen las normas generales para la evaluación del aprendizaje, acreditación, promoción, regularización y certificación en la educación básica.',
-        url: 'https://portal.usebeq.edu.mx/Resource/PDF/ACUERDO100923.pdf',
+        url: 'https://portal.usebeq.edu.mx/portal/Resource/PDF/ACUERDO100923.pdf',
         categoria: 'Acuerdos',
         color: 'from-blue-500 to-blue-600',
         badge: 'bg-blue-100 text-blue-700',
@@ -17,7 +17,7 @@ const DOCUMENTOS = [
       {
         titulo: 'Normas Específicas de Control Escolar',
         descripcion: 'Relativas a la Inscripción, Reinscripción, Acreditación, Promoción, Regularización y Certificación en la Educación Básica.',
-        url: 'https://portal.usebeq.edu.mx/Resource/PDF/normas_29042019.pdf',
+        url: 'https://portal.usebeq.edu.mx/portal/Resource/PDF/normas_29042019.pdf',
         categoria: 'Normas',
         color: 'from-indigo-500 to-indigo-600',
         badge: 'bg-indigo-100 text-indigo-700',
@@ -25,7 +25,7 @@ const DOCUMENTOS = [
       {
         titulo: 'Anexos Normas de Control Escolar Básica',
         descripcion: 'Anexos complementarios a las Normas de Control Escolar para Educación Básica.',
-        url: 'https://portal.usebeq.edu.mx/Resource/PDF/Anexo_02052019.pdf',
+        url: 'https://portal.usebeq.edu.mx/portal/Resource/PDF/Anexo_02052019.pdf',
         categoria: 'Anexos',
         color: 'from-purple-500 to-purple-600',
         badge: 'bg-purple-100 text-purple-700',
@@ -38,7 +38,7 @@ const DOCUMENTOS = [
       {
         titulo: 'Lineamientos para la Acreditación, Promoción y Certificación Anticipada',
         descripcion: 'De alumnos con Aptitudes Sobresalientes en Educación Básica.',
-        url: 'https://portal.usebeq.edu.mx/Resource/PDF/linemientos_29042019.pdf',
+        url: 'https://portal.usebeq.edu.mx/portal/Resource/PDF/linemientos_29042019.pdf',
         categoria: 'Lineamientos',
         color: 'from-emerald-500 to-emerald-600',
         badge: 'bg-emerald-100 text-emerald-700',
