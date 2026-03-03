@@ -17,6 +17,7 @@ import SolucionesEnLinea from './pages/SolucionesEnLinea';
 import RevocacionGrado from './pages/RevocacionGrado';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import ActivateAccount from './pages/ActivateAccount';
 import LandingPage from './pages/LandingPage';
 import Becas from './pages/Becas';
 import Boeva from './pages/Boeva';
@@ -37,6 +38,7 @@ function App() {
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/activate/:token" element={<ActivateAccount />} />
         <Route path="/auth/callback" element={<OAuthCallback />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profile" element={<Profile />} />

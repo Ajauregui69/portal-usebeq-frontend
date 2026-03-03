@@ -157,9 +157,12 @@ export default function StudentCard({ student, onUnlink, onNotification }) {
               <h3 className="text-xl font-bold mb-1 line-clamp-2">
                 {al_nombre} {al_appat} {al_apmat}
               </h3>
-              <p className="text-white/80 text-sm font-medium">
+              <p className="text-white/80 text-sm font-medium mb-3">
                 CURP: {al_curp}
               </p>
+              <span className="inline-block bg-white/25 text-white text-xs font-bold px-3 py-1 rounded-full border border-white/40 uppercase tracking-wide">
+                {status.label}
+              </span>
             </div>
           </div>
         </div>

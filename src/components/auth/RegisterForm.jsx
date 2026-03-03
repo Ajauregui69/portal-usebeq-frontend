@@ -6,6 +6,7 @@ export default function RegisterForm() {
   const [formData, setFormData] = useState({
     u_correo: '',
     u_pass: '',
+    u_pass_confirm: '',
     u_nombre: '',
     u_appat: '',
     u_apmat: '',
@@ -14,20 +15,41 @@ export default function RegisterForm() {
     sexo: '',
   });
 
+  const [localError, setLocalError] = useState('');
   const [registerSuccess, setRegisterSuccess] = useState(false);
   const navigate = useNavigate();
   const { register, isLoading, error } = useAuthStore();
 
+  const EMAIL_REGEX = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    if (name === 'u_tel') {
+      // Solo permitir digitos, espacios y guiones
+      const onlyValid = value.replace(/[^0-9\s\-]/g, '');
+      setFormData({ ...formData, [name]: onlyValid });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+    setLocalError('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const success = await register(formData);
+    setLocalError('');
+
+    if (!EMAIL_REGEX.test(formData.u_correo)) {
+      setLocalError('Ingresa un correo electronico valido (ejemplo: usuario@dominio.com).');
+      return;
+    }
+
+    if (formData.u_pass !== formData.u_pass_confirm) {
+      setLocalError('Las contraseñas no coinciden.');
+      return;
+    }
+
+    const { u_pass_confirm, ...dataToSend } = formData;
+    const success = await register(dataToSend);
     if (success) {
       setRegisterSuccess(true);
       setTimeout(() => navigate('/login'), 4000);
@@ -78,13 +100,13 @@ export default function RegisterForm() {
 
         {/* Form Card */}
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/20 p-8">
-          {error && (
+          {(localError || error) && (
             <div className="mb-6 bg-red-50 border-l-4 border-red-500 rounded-lg p-4">
               <div className="flex items-start">
                 <svg className="h-5 w-5 text-red-500 mr-3 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <p className="text-red-800 text-sm font-medium">{error}</p>
+                <p className="text-red-800 text-sm font-medium">{localError || error}</p>
               </div>
             </div>
           )}
@@ -204,6 +226,8 @@ export default function RegisterForm() {
                       value={formData.u_tel}
                       onChange={handleChange}
                       placeholder="442 123 4567"
+                      inputMode="numeric"
+                      maxLength={15}
                       className="block w-full pl-12 pr-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                     />
                   </div>
@@ -237,27 +261,52 @@ export default function RegisterForm() {
             {/* Security Section */}
             <div>
               <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wide mb-4">Seguridad</h3>
-              <div>
-                <label htmlFor="u_pass" className="block text-sm font-semibold text-slate-700 mb-2">
-                  Contraseña * (mínimo 6 caracteres)
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <svg className="h-5 w-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                    </svg>
+              <div className="space-y-4">
+                <div>
+                  <label htmlFor="u_pass" className="block text-sm font-semibold text-slate-700 mb-2">
+                    Contraseña * (mínimo 6 caracteres)
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                      <svg className="h-5 w-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                      </svg>
+                    </div>
+                    <input
+                      type="password"
+                      id="u_pass"
+                      name="u_pass"
+                      value={formData.u_pass}
+                      onChange={handleChange}
+                      required
+                      minLength={6}
+                      placeholder="••••••••"
+                      className="block w-full pl-12 pr-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    />
                   </div>
-                  <input
-                    type="password"
-                    id="u_pass"
-                    name="u_pass"
-                    value={formData.u_pass}
-                    onChange={handleChange}
-                    required
-                    minLength={6}
-                    placeholder="••••••••"
-                    className="block w-full pl-12 pr-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                  />
+                </div>
+                <div>
+                  <label htmlFor="u_pass_confirm" className="block text-sm font-semibold text-slate-700 mb-2">
+                    Confirmar Contraseña *
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                      <svg className="h-5 w-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                      </svg>
+                    </div>
+                    <input
+                      type="password"
+                      id="u_pass_confirm"
+                      name="u_pass_confirm"
+                      value={formData.u_pass_confirm}
+                      onChange={handleChange}
+                      required
+                      minLength={6}
+                      placeholder="••••••••"
+                      className="block w-full pl-12 pr-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    />
+                  </div>
                 </div>
               </div>
             </div>

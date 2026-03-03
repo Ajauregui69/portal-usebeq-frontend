@@ -1,8 +1,18 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { announcementsAPI } from '../services/api';
 
 export default function LandingPage() {
   const [faqOpen, setFaqOpen] = useState(null);
+  const [avisos, setAvisos] = useState([]);
+  const [avisosLoading, setAvisosLoading] = useState(true);
+
+  useEffect(() => {
+    announcementsAPI.getActive()
+      .then((res) => setAvisos(res.data || []))
+      .catch(() => setAvisos([]))
+      .finally(() => setAvisosLoading(false));
+  }, []);
 
   const servicios = [
     { to: '/login', title: 'Inicia Sesion', desc: 'Accede a tu cuenta del portal', color: 'from-blue-600 to-indigo-600', icon: 'M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1' },
@@ -52,6 +62,7 @@ export default function LandingPage() {
               </Link>
             </div>
             <div className="hidden md:flex items-center gap-4">
+              <a href="#avisos" className="text-slate-600 hover:text-blue-600 font-medium transition-colors">Avisos</a>
               <a href="#servicios" className="text-slate-600 hover:text-blue-600 font-medium transition-colors">Servicios</a>
               <a href="#tramites" className="text-slate-600 hover:text-blue-600 font-medium transition-colors">Tramites</a>
               <a href="#faq" className="text-slate-600 hover:text-blue-600 font-medium transition-colors">FAQ</a>
@@ -126,6 +137,78 @@ export default function LandingPage() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Avisos Importantes Section */}
+      <section id="avisos" className="py-16 bg-amber-50/60 border-y border-amber-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-3 mb-10">
+            <div className="p-2 bg-amber-500 rounded-xl shadow">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+              </svg>
+            </div>
+            <div>
+              <h2 className="text-3xl font-black text-slate-900">Avisos Importantes</h2>
+              <p className="text-slate-600 text-sm">Informacion relevante para padres de familia</p>
+            </div>
+          </div>
+
+          {avisosLoading ? (
+            <div className="flex items-center justify-center py-12">
+              <svg className="animate-spin h-8 w-8 text-amber-500" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            </div>
+          ) : avisos.length === 0 ? (
+            <div className="text-center py-12 text-slate-500">
+              <svg className="w-12 h-12 mx-auto mb-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+              </svg>
+              <p className="font-medium">No hay avisos activos en este momento.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {avisos.map((aviso) => {
+                const tipoConfig = {
+                  urgent: { border: 'border-red-200', bg: 'bg-red-50', icon: 'text-red-500', iconBg: 'bg-red-100', badge: 'bg-red-100 text-red-700', label: 'Urgente' },
+                  warning: { border: 'border-amber-200', bg: 'bg-amber-50', icon: 'text-amber-600', iconBg: 'bg-amber-100', badge: 'bg-amber-100 text-amber-700', label: 'Importante' },
+                  info: { border: 'border-blue-100', bg: 'bg-white', icon: 'text-blue-500', iconBg: 'bg-blue-100', badge: 'bg-blue-100 text-blue-700', label: 'Aviso' },
+                };
+                const t = tipoConfig[aviso.tipo] || tipoConfig.info;
+                return (
+                  <div
+                    key={aviso.id}
+                    className={`rounded-2xl shadow-md border ${t.border} ${t.bg} p-6 hover:shadow-lg transition-all duration-300`}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="flex-shrink-0 mt-0.5">
+                        <div className={`w-8 h-8 ${t.iconBg} rounded-lg flex items-center justify-center`}>
+                          <svg className={`w-4 h-4 ${t.icon}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                        </div>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1 flex-wrap">
+                          <h3 className="font-bold text-slate-800 text-sm leading-snug">{aviso.titulo}</h3>
+                          <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${t.badge}`}>{t.label}</span>
+                        </div>
+                        <p className="text-slate-600 text-sm leading-relaxed">{aviso.contenido}</p>
+                        {aviso.created_at && (
+                          <p className="text-xs text-slate-400 mt-2">
+                            {new Date(aviso.created_at).toLocaleDateString('es-MX', { day: '2-digit', month: 'long', year: 'numeric' })}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </section>
 
