@@ -42,13 +42,19 @@ export default function StudentDetail() {
     setTimeout(() => setNotification(null), 5000);
   };
 
+  const getCurrentSchoolYear = () => {
+    const now = new Date();
+    return now.getMonth() >= 7 ? now.getFullYear() : now.getFullYear() - 1;
+  };
+
   const handleDownloadBoleta = async (historica = false, anio = null) => {
     setDownloading(true);
     setDownloadType(historica ? 'historica' : 'actual');
     try {
-      const response = historica && anio
-        ? await usebeqAPI.getBoletaHistorica(studentId, anio)
-        : await usebeqAPI.getBoleta(studentId);
+      const useCurrentEndpoint = !historica || anio === null || anio >= getCurrentSchoolYear();
+      const response = useCurrentEndpoint
+        ? await usebeqAPI.getBoleta(studentId)
+        : await usebeqAPI.getBoletaHistorica(studentId, anio);
 
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');

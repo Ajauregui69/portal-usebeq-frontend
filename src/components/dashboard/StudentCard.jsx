@@ -43,14 +43,23 @@ export default function StudentCard({ student, onUnlink, onNotification }) {
 
   const status = statusConfig[al_estatus?.trim()] || statusConfig.I;
 
+  // Returns the anio_inicio of the current school cycle
+  // (e.g. in March 2026 the current cycle is 2025-2026, so returns 2025)
+  const getCurrentSchoolYear = () => {
+    const now = new Date();
+    return now.getMonth() >= 7 ? now.getFullYear() : now.getFullYear() - 1;
+  };
+
   const handleDownloadBoleta = async (isHistorica = false, anio = null) => {
     setDownloading(true);
     setShowBoletaMenu(false);
     setShowYearModal(false);
     try {
-      const response = isHistorica && anio
-        ? await usebeqAPI.getBoletaHistorica(al_id, anio)
-        : await usebeqAPI.getBoleta(al_id);
+      // If the selected year is the current school cycle, use /boleta/ (not /boleta-historica/)
+      const useCurrentEndpoint = !isHistorica || anio === null || anio >= getCurrentSchoolYear();
+      const response = useCurrentEndpoint
+        ? await usebeqAPI.getBoleta(al_id)
+        : await usebeqAPI.getBoletaHistorica(al_id, anio);
 
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
