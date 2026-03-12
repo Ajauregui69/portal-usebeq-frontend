@@ -149,6 +149,11 @@ export const gradesAPI = {
   downloadPDF: (studentId) => api.get(`/grades/student/${studentId}/pdf`, { responseType: 'blob' }),
 };
 
+// Consulta pública de calificaciones por CURP (sin auth)
+export const consultaAPI = {
+  buscarPorCurp: (curp) => api.post('/grades/consulta', { curp }),
+};
+
 // Auth API extensions
 export const authExtAPI = {
   forgotPassword: (email) => api.post(`/auth/forgot-password?email=${encodeURIComponent(email)}`),

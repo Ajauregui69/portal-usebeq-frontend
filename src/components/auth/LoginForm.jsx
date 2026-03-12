@@ -69,7 +69,7 @@ export default function LoginForm() {
                   </svg>
                 </div>
                 <input
-                  type="email"
+                  type="text"
                   id="u_correo"
                   name="u_correo"
                   value={formData.u_correo}

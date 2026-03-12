@@ -15,6 +15,7 @@ export default function LandingPage() {
   }, []);
 
   const servicios = [
+    { to: '/consulta', title: 'Consulta e Impresion', desc: 'Consulta calificaciones por CURP del estudiante', color: 'from-teal-500 to-teal-600', icon: 'M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' },
     { to: '/documentos-normativos', title: 'Documentos Normativos', desc: 'Acuerdos y normas de control escolar', color: 'from-amber-500 to-amber-600', icon: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' },
     { to: '/boeva', title: 'Verificacion de Documentos', desc: 'Verifica autenticidad de boletas', color: 'from-cyan-500 to-cyan-600', icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z' },
     { to: '/becas', title: 'Becas', desc: 'Informacion sobre becas disponibles', color: 'from-purple-500 to-purple-600', icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },

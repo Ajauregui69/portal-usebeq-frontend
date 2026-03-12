@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
 import useAuthStore from '../store/authStore';
 import { faqAPI } from '../services/api';
@@ -84,7 +84,19 @@ export default function FAQ() {
                 </button>
                 {openItem === item.id && (
                   <div className="px-5 pb-5 border-t border-slate-100">
-                    <p className="text-slate-600 pt-4 leading-relaxed">{item.answer}</p>
+                    <p className="text-slate-600 pt-4 leading-relaxed">
+                      {item.answer}
+                      {item.link_url && (
+                        <> <Link to={item.link_url} className="text-blue-600 hover:underline font-medium">{item.link_text || 'aquí'}</Link>.</>
+                      )}
+                    </p>
+                    {item.video_url && (
+                      <div className="mt-4">
+                        <video controls className="w-full rounded-xl border border-slate-200" src={item.video_url}>
+                          Tu navegador no soporta la reproducción de video.
+                        </video>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

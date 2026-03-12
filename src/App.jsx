@@ -22,6 +22,7 @@ import LandingPage from './pages/LandingPage';
 import Becas from './pages/Becas';
 import Boeva from './pages/Boeva';
 import BuzonPadres from './pages/BuzonPadres';
+import ConsultaCalificaciones from './pages/ConsultaCalificaciones';
 import useAuthStore from './store/authStore';
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
         <Route path="/becas" element={<Becas />} />
         <Route path="/boeva" element={<Boeva />} />
         <Route path="/buzon-padres" element={<BuzonPadres />} />
+        <Route path="/consulta" element={<ConsultaCalificaciones />} />
         <Route path="/" element={<LandingPage />} />
       </Routes>
     </Router>
