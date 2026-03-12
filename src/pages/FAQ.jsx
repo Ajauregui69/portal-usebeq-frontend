@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
 import useAuthStore from '../store/authStore';
 import { faqAPI } from '../services/api';
 
 export default function FAQ() {
-  const navigate = useNavigate();
   const { isAuthenticated } = useAuthStore();
   const [faqItems, setFaqItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -14,9 +13,8 @@ export default function FAQ() {
   const [activeCategory, setActiveCategory] = useState('Todas');
 
   useEffect(() => {
-    if (!isAuthenticated) { navigate('/login'); return; }
     loadFAQ();
-  }, [isAuthenticated, navigate]);
+  }, []);
 
   const loadFAQ = async () => {
     try {
@@ -39,13 +37,41 @@ export default function FAQ() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
-      <Navbar />
+      {isAuthenticated ? (
+        <Navbar />
+      ) : (
+        <nav className="bg-white/80 backdrop-blur-md shadow-lg border-b border-white/20 sticky top-0 z-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between h-20">
+              <div className="flex items-center">
+                <Link to="/" className="flex items-center gap-3 group">
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30 group-hover:scale-110 transition-transform">
+                    <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                  </div>
+                  <div>
+                    <span className="text-2xl font-black bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">USEBEQ</span>
+                    <p className="text-xs text-slate-500 font-medium">Portal de Padres</p>
+                  </div>
+                </Link>
+              </div>
+              <div className="flex items-center gap-3">
+                <Link to="/login" className="text-slate-600 hover:text-blue-600 font-medium transition-colors px-4 py-2">Inicia Sesión</Link>
+                <Link to="/register" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-5 py-2.5 rounded-xl font-semibold shadow-lg shadow-blue-500/30 transition-all duration-300 hover:scale-105">
+                  Regístrate
+                </Link>
+              </div>
+            </div>
+          </div>
+        </nav>
+      )}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-10">
-          <button onClick={() => navigate('/dashboard')} className="flex items-center gap-2 text-slate-600 hover:text-blue-600 mb-4 transition-colors">
+          <Link to={isAuthenticated ? '/dashboard' : '/'} className="flex items-center gap-2 text-slate-600 hover:text-blue-600 mb-4 transition-colors w-fit">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-            Volver al Panel
-          </button>
+            {isAuthenticated ? 'Volver al Panel' : 'Volver al inicio'}
+          </Link>
           <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Preguntas Frecuentes</h1>
           <p className="text-slate-600 mt-2">Encuentra respuestas a las dudas mas comunes</p>
         </div>
