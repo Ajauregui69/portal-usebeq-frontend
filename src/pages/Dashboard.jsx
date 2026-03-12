@@ -294,27 +294,6 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Servicios del Portal */}
-        <div className="mb-12">
-          <h2 className="text-2xl font-bold text-slate-800 mb-6">Servicios del Portal</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {SERVICIOS.map((item) => (
-              <Link key={item.to} to={item.to}
-                className="bg-white/80 backdrop-blur-sm rounded-2xl p-5 shadow-lg border border-white/20 hover:shadow-xl transition-all duration-300 group flex flex-col gap-3">
-                <div className={`p-2.5 bg-gradient-to-br ${item.color} rounded-xl shadow-md w-fit group-hover:scale-110 transition-transform`}>
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
-                  </svg>
-                </div>
-                <div>
-                  <p className="font-semibold text-slate-800 text-sm leading-tight">{item.title}</p>
-                  <p className="text-slate-500 text-xs mt-0.5">{item.desc}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-
         {/* Students Grid */}
         {isLoading ? (
           <div className="text-center py-20">
@@ -353,6 +332,27 @@ export default function Dashboard() {
             </div>
           </div>
         )}
+
+        {/* Servicios del Portal */}
+        <div className="mt-12">
+          <h2 className="text-2xl font-bold text-slate-800 mb-6">Servicios del Portal</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+            {SERVICIOS.map((item) => (
+              <Link key={item.to} to={item.to}
+                className="bg-white/80 backdrop-blur-sm rounded-2xl p-5 shadow-lg border border-white/20 hover:shadow-xl transition-all duration-300 group flex flex-col gap-3">
+                <div className={`p-2.5 bg-gradient-to-br ${item.color} rounded-xl shadow-md w-fit group-hover:scale-110 transition-transform`}>
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
+                  </svg>
+                </div>
+                <div>
+                  <p className="font-semibold text-slate-800 text-sm leading-tight">{item.title}</p>
+                  <p className="text-slate-500 text-xs mt-0.5">{item.desc}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Sibling Confirmation Modal */}
