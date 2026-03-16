@@ -113,7 +113,6 @@ export default function Dashboard() {
         await studentAPI.confirmSibling(pendingSiblings.newStudentId, sibling.al_id);
       }
       showNotification('success', 'Relación de hermandad registrada correctamente');
-      const { studentAPI } = await import('../services/api');
       studentAPI.getSiblingsCount().then(res => setSiblingsCount(res.data.count || 0)).catch(() => {});
     } catch {
       showNotification('error', 'No se pudo registrar la relación de hermandad');
