@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { announcementsAPI } from '../services/api';
+import useAuthStore from '../store/authStore';
 
 export default function LandingPage() {
+  const { isAuthenticated } = useAuthStore();
   const [faqOpen, setFaqOpen] = useState(null);
   const [avisos, setAvisos] = useState([]);
   const [avisosLoading, setAvisosLoading] = useState(true);
@@ -65,14 +67,26 @@ export default function LandingPage() {
               <a href="#servicios" className="text-slate-600 hover:text-blue-600 font-medium transition-colors">Servicios</a>
               <a href="#tramites" className="text-slate-600 hover:text-blue-600 font-medium transition-colors">Tramites</a>
               <a href="#faq" className="text-slate-600 hover:text-blue-600 font-medium transition-colors">FAQ</a>
-              <Link to="/login" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-2.5 rounded-xl font-semibold shadow-lg shadow-blue-500/30 transition-all duration-300 hover:scale-105">
-                Inicia Sesion
-              </Link>
+              {isAuthenticated ? (
+                <Link to="/dashboard" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-2.5 rounded-xl font-semibold shadow-lg shadow-blue-500/30 transition-all duration-300 hover:scale-105">
+                  Ir al Dashboard
+                </Link>
+              ) : (
+                <Link to="/login" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-2.5 rounded-xl font-semibold shadow-lg shadow-blue-500/30 transition-all duration-300 hover:scale-105">
+                  Inicia Sesion
+                </Link>
+              )}
             </div>
             <div className="md:hidden flex items-center">
-              <Link to="/login" className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2 rounded-xl font-semibold text-sm">
-                Inicia Sesion
-              </Link>
+              {isAuthenticated ? (
+                <Link to="/dashboard" className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2 rounded-xl font-semibold text-sm">
+                  Dashboard
+                </Link>
+              ) : (
+                <Link to="/login" className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2 rounded-xl font-semibold text-sm">
+                  Inicia Sesion
+                </Link>
+              )}
             </div>
           </div>
         </div>
