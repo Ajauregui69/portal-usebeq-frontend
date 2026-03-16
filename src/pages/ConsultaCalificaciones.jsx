@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { consultaAPI } from '../services/api';
+import useAuthStore from '../store/authStore';
 
 export default function ConsultaCalificaciones() {
+  const { isAuthenticated } = useAuthStore();
   const [curp, setCurp] = useState('');
   const [resultado, setResultado] = useState(null);
   const [error, setError] = useState('');
@@ -47,10 +49,18 @@ export default function ConsultaCalificaciones() {
               </Link>
             </div>
             <div className="flex items-center gap-3">
-              <Link to="/login" className="text-slate-600 hover:text-blue-600 font-medium text-sm transition-colors">Inicia Sesión</Link>
-              <Link to="/register" className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2 rounded-xl font-semibold text-sm shadow-lg shadow-blue-500/30 hover:scale-105 transition-transform">
-                Regístrate
-              </Link>
+              {isAuthenticated ? (
+                <Link to="/dashboard" className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2 rounded-xl font-semibold text-sm shadow-lg shadow-blue-500/30 hover:scale-105 transition-transform">
+                  Ir al Dashboard
+                </Link>
+              ) : (
+                <>
+                  <Link to="/login" className="text-slate-600 hover:text-blue-600 font-medium text-sm transition-colors">Inicia Sesión</Link>
+                  <Link to="/register" className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2 rounded-xl font-semibold text-sm shadow-lg shadow-blue-500/30 hover:scale-105 transition-transform">
+                    Regístrate
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -111,11 +121,20 @@ export default function ConsultaCalificaciones() {
           </form>
 
           <p className="text-center text-slate-600 text-sm mt-6">
-            Para obtener una impresión de la boleta de evaluación{' '}
-            <Link to="/login" className="text-blue-600 hover:underline font-medium">inicia sesión</Link>
-            {' '}o{' '}
-            <Link to="/register" className="text-blue-600 hover:underline font-medium">registra tu cuenta</Link>
-            {' '}en el Portal de Padres de Familia.
+            {isAuthenticated ? (
+              <>
+                Para obtener una impresión de la boleta de evaluación{' '}
+                <Link to="/dashboard" className="text-blue-600 hover:underline font-medium">ve a tu dashboard</Link>.
+              </>
+            ) : (
+              <>
+                Para obtener una impresión de la boleta de evaluación{' '}
+                <Link to="/login" className="text-blue-600 hover:underline font-medium">inicia sesión</Link>
+                {' '}o{' '}
+                <Link to="/register" className="text-blue-600 hover:underline font-medium">registra tu cuenta</Link>
+                {' '}en el Portal de Padres de Familia.
+              </>
+            )}
           </p>
         </div>
 
@@ -128,12 +147,14 @@ export default function ConsultaCalificaciones() {
               </svg>
               <div>
                 <p className="text-red-800 font-medium">{error}</p>
-                <p className="text-red-600 text-sm mt-1">
-                  Para obtener una impresión de la boleta de evaluación{' '}
-                  <Link to="/login" className="underline font-medium">inicia sesión</Link>
-                  {' '}o{' '}
-                  <Link to="/register" className="underline font-medium">registra tu cuenta</Link>.
-                </p>
+                {!isAuthenticated && (
+                  <p className="text-red-600 text-sm mt-1">
+                    Para obtener una impresión de la boleta de evaluación{' '}
+                    <Link to="/login" className="underline font-medium">inicia sesión</Link>
+                    {' '}o{' '}
+                    <Link to="/register" className="underline font-medium">registra tu cuenta</Link>.
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -163,11 +184,20 @@ export default function ConsultaCalificaciones() {
 
               <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6">
                 <p className="text-slate-700 text-sm font-medium">
-                  Para obtener una <span className="text-blue-700 font-bold">impresión de la boleta</span> de evaluación,{' '}
-                  <Link to="/login" className="text-blue-600 hover:underline font-semibold">inicia sesión</Link>
-                  {' '}o{' '}
-                  <Link to="/register" className="text-blue-600 hover:underline font-semibold">regístrate</Link>
-                  {' '}en el Portal de Padres de Familia.
+                  {isAuthenticated ? (
+                    <>
+                      Para obtener una <span className="text-blue-700 font-bold">impresión de la boleta</span> de evaluación,{' '}
+                      <Link to="/dashboard" className="text-blue-600 hover:underline font-semibold">ve a tu dashboard</Link>.
+                    </>
+                  ) : (
+                    <>
+                      Para obtener una <span className="text-blue-700 font-bold">impresión de la boleta</span> de evaluación,{' '}
+                      <Link to="/login" className="text-blue-600 hover:underline font-semibold">inicia sesión</Link>
+                      {' '}o{' '}
+                      <Link to="/register" className="text-blue-600 hover:underline font-semibold">regístrate</Link>
+                      {' '}en el Portal de Padres de Familia.
+                    </>
+                  )}
                 </p>
               </div>
             </div>
