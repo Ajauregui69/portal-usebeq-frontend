@@ -17,7 +17,7 @@ const SERVICIOS = [
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const { isAuthenticated, user } = useAuthStore();
+  const { isAuthenticated, user, isLoading: authLoading } = useAuthStore();
   const { students, fetchStudents, unlinkStudent, isLoading, error, clearError } = useStudentStore();
   const [showAddModal, setShowAddModal] = useState(false);
   const [curp, setCurp] = useState('');
@@ -37,6 +37,7 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
+    if (authLoading) return;
     if (!isAuthenticated) {
       navigate('/login');
       return;
@@ -45,7 +46,7 @@ export default function Dashboard() {
     import('../services/api').then(({ studentAPI }) => {
       studentAPI.getSiblingsCount().then(res => setSiblingsCount(res.data.count || 0)).catch(() => {});
     });
-  }, [isAuthenticated, navigate, fetchStudents]);
+  }, [isAuthenticated, authLoading, navigate, fetchStudents]);
 
   const handleAddStudent = async (e) => {
     e.preventDefault();

@@ -4,7 +4,7 @@ import { authAPI, userAPI } from '../services/api';
 const useAuthStore = create((set) => ({
   user: null,
   isAuthenticated: false,
-  isLoading: false,
+  isLoading: !!localStorage.getItem('access_token'),
   error: null,
 
   // Login action
