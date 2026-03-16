@@ -33,8 +33,8 @@ export default function LandingPage() {
   const faqs = [
     { q: '¿Que es el Portal para Padres?', a: 'Es una opcion adicional a la escuela que permite a los padres, madres de familia o tutores conocer la informacion academica de los estudiantes de preescolar, primaria y secundaria del estado de Queretaro.' },
     { q: '¿Por que es necesario registrar una cuenta?', a: 'Para tener acceso a la impresion de los documentos oficiales de acreditacion de sus hijos.' },
-    { q: '¿Como registro mi cuenta?', a: 'Ingresa a la seccion "Registra tu cuenta", completa el formulario con un correo electronico valido y una contrasena.' },
-    { q: '¿Como visualizo la informacion del estudiante?', a: 'Debes agregar al estudiante a tu perfil de usuario. Una vez agregado, podras ver sus calificaciones, informacion escolar y mas.' },
+    { q: '¿Como registro mi cuenta?', a: 'Ingresa a la seccion "Registra tu cuenta", completa el formulario con un correo electronico valido y una contrasena. Consulta el tutorial a continuacion.', video_url: '/videos/registro.webm' },
+    { q: '¿Como visualizo la informacion del estudiante?', a: 'Debes agregar al estudiante a tu perfil de usuario. Una vez agregado, podras ver sus calificaciones, informacion escolar y mas. Consulta el tutorial a continuacion.', video_url: '/videos/sesion.webm' },
     { q: '¿Puedo agregar varios estudiantes a mi perfil?', a: 'Si, siempre y cuando sea posible realizar la verificacion de vinculacion parental con los datos del estudiante.' },
     { q: '¿Que es la Vinculacion de Hermanos?', a: 'Es un procedimiento para identificar la relacion consanguinea o por afinidad entre estudiantes de educacion basica en Queretaro.' },
     { q: '¿Que es una Baja por Traslado?', a: 'Es la asignacion del estatus de baja al alumno que sera trasladado de escuela dentro o fuera del estado.' },
@@ -299,6 +299,13 @@ export default function LandingPage() {
                 {faqOpen === i && (
                   <div className="px-5 pb-5">
                     <p className="text-slate-600">{faq.a}</p>
+                    {faq.video_url && (
+                      <div className="mt-4">
+                        <video controls className="w-full rounded-xl border border-slate-200" src={faq.video_url}>
+                          Tu navegador no soporta la reproduccion de video.
+                        </video>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

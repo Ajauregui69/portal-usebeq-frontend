@@ -77,6 +77,7 @@ export const studentAPI = {
   confirmSibling: (al_id, her_id) => api.post('/students/confirm-sibling', null, {
     params: { al_id, her_id }
   }),
+  getSiblingsCount: () => api.get('/students/siblings-count'),
 };
 
 // USEBEQ External API

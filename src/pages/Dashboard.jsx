@@ -29,6 +29,7 @@ export default function Dashboard() {
   const [linkError, setLinkError] = useState(null);
   const [pendingSiblings, setPendingSiblings] = useState(null); // { newStudentId, siblings: [{al_id, nombre}] }
   const [confirmingSiblings, setConfirmingSiblings] = useState(false);
+  const [siblingsCount, setSiblingsCount] = useState(0);
 
   const showNotification = (type, message) => {
     setNotification({ type, message });
@@ -41,6 +42,9 @@ export default function Dashboard() {
       return;
     }
     fetchStudents();
+    import('../services/api').then(({ studentAPI }) => {
+      studentAPI.getSiblingsCount().then(res => setSiblingsCount(res.data.count || 0)).catch(() => {});
+    });
   }, [isAuthenticated, navigate, fetchStudents]);
 
   const handleAddStudent = async (e) => {
@@ -109,6 +113,8 @@ export default function Dashboard() {
         await studentAPI.confirmSibling(pendingSiblings.newStudentId, sibling.al_id);
       }
       showNotification('success', 'Relación de hermandad registrada correctamente');
+      const { studentAPI } = await import('../services/api');
+      studentAPI.getSiblingsCount().then(res => setSiblingsCount(res.data.count || 0)).catch(() => {});
     } catch {
       showNotification('error', 'No se pudo registrar la relación de hermandad');
     } finally {
@@ -287,7 +293,7 @@ export default function Dashboard() {
               <div>
                 <p className="text-sm text-slate-500 font-medium">Vinculados</p>
                 <p className="text-2xl font-bold text-slate-800">
-                  {students.length}
+                  {siblingsCount}
                 </p>
               </div>
             </div>
