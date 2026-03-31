@@ -36,7 +36,7 @@ export default function FAQ() {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-[#7CC6D8]/10 to-[#4996C6]/10">
       {isAuthenticated ? (
         <Navbar />
       ) : (
@@ -45,20 +45,20 @@ export default function FAQ() {
             <div className="flex justify-between h-20">
               <div className="flex items-center">
                 <Link to="/" className="flex items-center gap-3 group">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30 group-hover:scale-110 transition-transform">
+                  <div className="w-12 h-12 bg-[#242B57] rounded-xl flex items-center justify-center shadow-lg shadow-[#242B57]/30 group-hover:scale-110 transition-transform">
                     <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                     </svg>
                   </div>
                   <div>
-                    <span className="text-2xl font-black bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">USEBEQ</span>
+                    <span className="text-2xl font-black text-[#242B57]">USEBEQ</span>
                     <p className="text-xs text-slate-500 font-medium">Portal de Padres</p>
                   </div>
                 </Link>
               </div>
               <div className="flex items-center gap-3">
-                <Link to="/login" className="text-slate-600 hover:text-blue-600 font-medium transition-colors px-4 py-2">Inicia Sesión</Link>
-                <Link to="/register" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-5 py-2.5 rounded-xl font-semibold shadow-lg shadow-blue-500/30 transition-all duration-300 hover:scale-105">
+                <Link to="/login" className="text-slate-600 hover:text-[#4996C6] font-medium transition-colors px-4 py-2">Inicia Sesión</Link>
+                <Link to="/register" className="bg-[#242B57] hover:bg-[#4996C6] text-white px-5 py-2.5 rounded-xl font-semibold shadow-lg shadow-[#242B57]/30 transition-all duration-300 hover:scale-105">
                   Regístrate
                 </Link>
               </div>
@@ -68,23 +68,23 @@ export default function FAQ() {
       )}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-10">
-          <Link to={isAuthenticated ? '/dashboard' : '/'} className="flex items-center gap-2 text-slate-600 hover:text-blue-600 mb-4 transition-colors w-fit">
+          <Link to={isAuthenticated ? '/dashboard' : '/'} className="flex items-center gap-2 text-slate-600 hover:text-[#4996C6] mb-4 transition-colors w-fit">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
             {isAuthenticated ? 'Volver al Panel' : 'Volver al inicio'}
           </Link>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Preguntas Frecuentes</h1>
-          <p className="text-slate-600 mt-2">Encuentra respuestas a las dudas mas comunes</p>
+          <h1 className="text-3xl font-bold text-[#242B57]">Preguntas Frecuentes</h1>
+          <p className="text-slate-600 mt-2">Encuentra respuestas a las dudas más comunes</p>
         </div>
 
         <div className="mb-6">
           <input type="text" placeholder="Buscar pregunta..." value={search} onChange={(e) => setSearch(e.target.value)}
-            className="w-full px-5 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white/80 backdrop-blur-sm" />
+            className="w-full px-5 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent transition-all bg-white/80 backdrop-blur-sm" />
         </div>
 
         <div className="flex flex-wrap gap-2 mb-8">
           {categories.map(cat => (
             <button key={cat} onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${activeCategory === cat ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/30' : 'bg-white/80 text-slate-600 hover:bg-blue-50 border border-slate-200'}`}>
+              className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${activeCategory === cat ? 'bg-[#242B57] text-white shadow-lg shadow-[#242B57]/30' : 'bg-white/80 text-slate-600 hover:bg-[#7CC6D8]/15 border border-slate-200'}`}>
               {cat}
             </button>
           ))}
@@ -92,7 +92,7 @@ export default function FAQ() {
 
         {isLoading ? (
           <div className="text-center py-20">
-            <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-blue-200 border-t-blue-600"></div>
+            <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-[#7CC6D8]/30 border-t-[#4996C6]"></div>
           </div>
         ) : (
           <div className="space-y-3">
@@ -101,7 +101,7 @@ export default function FAQ() {
                 <button onClick={() => setOpenItem(openItem === item.id ? null : item.id)}
                   className="w-full flex items-center justify-between p-5 text-left">
                   <div className="flex items-center gap-3 flex-1">
-                    <span className="px-2.5 py-1 bg-blue-100 text-blue-700 text-xs font-semibold rounded-full whitespace-nowrap">{item.category}</span>
+                    <span className="px-2.5 py-1 bg-[#7CC6D8]/20 text-[#242B57] text-xs font-semibold rounded-full whitespace-nowrap">{item.category}</span>
                     <span className="font-semibold text-slate-800">{item.question}</span>
                   </div>
                   <svg className={`w-5 h-5 text-slate-400 transition-transform duration-300 flex-shrink-0 ${openItem === item.id ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -113,7 +113,7 @@ export default function FAQ() {
                     <p className="text-slate-600 pt-4 leading-relaxed">
                       {item.answer}
                       {item.link_url && (
-                        <> <Link to={item.link_url} className="text-blue-600 hover:underline font-medium">{item.link_text || 'aquí'}</Link>.</>
+                        <> <Link to={item.link_url} className="text-[#4996C6] hover:underline font-medium">{item.link_text || 'aquí'}</Link>.</>
                       )}
                     </p>
                     {item.video_url && (
@@ -128,7 +128,7 @@ export default function FAQ() {
               </div>
             ))}
             {filtered.length === 0 && (
-              <div className="text-center py-12 text-slate-500">No se encontraron resultados para tu busqueda.</div>
+              <div className="text-center py-12 text-slate-500">No se encontraron resultados para tu búsqueda.</div>
             )}
           </div>
         )}

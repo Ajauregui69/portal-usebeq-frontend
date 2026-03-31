@@ -28,34 +28,34 @@ export default function Avisos() {
   };
 
   const tipoBadge = {
-    info: 'bg-blue-100 text-blue-700',
-    warning: 'bg-amber-100 text-amber-700',
+    info: 'bg-[#7CC6D8]/20 text-[#242B57]',
+    warning: 'bg-[#E1A031]/15 text-[#7a5200]',
     urgent: 'bg-red-100 text-red-700',
   };
   const tipoLabel = { info: 'Informativo', warning: 'Importante', urgent: 'Urgente' };
-  const tipoBorder = { info: 'border-l-blue-500', warning: 'border-l-amber-500', urgent: 'border-l-red-500' };
+  const tipoBorder = { info: 'border-l-[#4996C6]', warning: 'border-l-[#E1A031]', urgent: 'border-l-red-500' };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-[#7CC6D8]/10 to-[#4996C6]/10">
       <Navbar />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-10">
-          <button onClick={() => navigate('/dashboard')} className="flex items-center gap-2 text-slate-600 hover:text-blue-600 mb-4 transition-colors">
+          <button onClick={() => navigate('/dashboard')} className="flex items-center gap-2 text-slate-600 hover:text-[#4996C6] mb-4 transition-colors">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
             Volver al Panel
           </button>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Avisos Importantes</h1>
+          <h1 className="text-3xl font-bold text-[#242B57]">Avisos Importantes</h1>
           <p className="text-slate-600 mt-2">Mantente informado sobre las novedades de la USEBEQ</p>
         </div>
 
         {isLoading ? (
           <div className="text-center py-20">
-            <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-blue-200 border-t-blue-600"></div>
+            <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-[#7CC6D8]/30 border-t-[#4996C6]"></div>
           </div>
         ) : avisos.length === 0 ? (
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-16 text-center border border-white/20">
-            <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <svg className="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
+            <div className="w-20 h-20 bg-[#7CC6D8]/20 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg className="w-10 h-10 text-[#4996C6]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
             </div>
             <h2 className="text-xl font-bold text-slate-800 mb-2">No hay avisos por el momento</h2>
             <p className="text-slate-600">Cuando haya avisos importantes, aparecerán aquí.</p>
