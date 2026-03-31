@@ -34,10 +34,10 @@ export default function StudentCard({ student, onUnlink, onNotification }) {
     },
     E: {
       label: 'Egresado',
-      color: 'from-blue-500 to-blue-600',
-      bg: 'bg-blue-50',
-      text: 'text-blue-700',
-      border: 'border-blue-200'
+      color: 'from-[#4996C6] to-[#242B57]',
+      bg: 'bg-[#7CC6D8]/10',
+      text: 'text-[#242B57]',
+      border: 'border-[#7CC6D8]/40'
     },
   };
 
@@ -79,7 +79,7 @@ export default function StudentCard({ student, onUnlink, onNotification }) {
         if (status === 500 || status === 404) {
           onNotification('error', 'El alumno no tiene boleta disponible para el ciclo seleccionado.');
         } else {
-          onNotification('error', 'Error al descargar la boleta. Intenta nuevamente mas tarde.');
+          onNotification('error', 'Error al descargar la boleta. Intenta nuevamente más tarde.');
         }
       }
     } finally {
@@ -129,7 +129,7 @@ export default function StudentCard({ student, onUnlink, onNotification }) {
                 <select
                   value={selectedYear}
                   onChange={(e) => setSelectedYear(parseInt(e.target.value))}
-                  className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-lg font-medium"
+                  className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent transition-all text-lg font-medium"
                 >
                   {yearOptions.map((year) => (
                     <option key={year} value={year}>
@@ -142,7 +142,7 @@ export default function StudentCard({ student, onUnlink, onNotification }) {
               <div className="flex gap-3">
                 <button
                   onClick={confirmDownloadHistorica}
-                  className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg transition-all duration-300 hover:scale-105"
+                  className="flex-1 bg-[#242B57] hover:bg-[#4996C6] text-white px-6 py-3 rounded-xl font-semibold shadow-lg transition-all duration-300 hover:scale-105"
                 >
                   Descargar
                 </button>
@@ -181,7 +181,7 @@ export default function StudentCard({ student, onUnlink, onNotification }) {
           {current_enrollment ? (
             <div className="space-y-3">
               <h4 className="text-sm font-bold text-slate-700 uppercase tracking-wide mb-3">
-                Informacion Academica
+                Información Académica
               </h4>
               <div className="grid grid-cols-2 gap-3">
                 <div className="bg-slate-50 rounded-xl p-3 border border-slate-100">
@@ -204,7 +204,7 @@ export default function StudentCard({ student, onUnlink, onNotification }) {
             </div>
           ) : (
             <div className="text-center py-4">
-              <p className="text-slate-400 text-sm">Sin informacion academica local</p>
+              <p className="text-slate-400 text-sm">Sin información académica local</p>
             </div>
           )}
         </div>
@@ -215,7 +215,7 @@ export default function StudentCard({ student, onUnlink, onNotification }) {
           <div className="flex gap-3">
             <button
               onClick={() => navigate(`/student/${student.al_id}`)}
-              className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-4 py-3 rounded-xl text-sm font-semibold shadow-md shadow-blue-500/30 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2"
+              className="flex-1 bg-[#242B57] hover:bg-[#4996C6] text-white px-4 py-3 rounded-xl text-sm font-semibold shadow-md shadow-[#242B57]/30 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -272,12 +272,12 @@ export default function StudentCard({ student, onUnlink, onNotification }) {
                 </button>
                 <button
                   onClick={handleBoletaHistorica}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all flex items-center justify-center gap-2"
+                  className="w-full bg-[#242B57] hover:bg-[#4996C6] text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all flex items-center justify-center gap-2"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  Boleta Historica
+                  Boleta Histórica
                 </button>
                 <button
                   onClick={() => setShowBoletaMenu(false)}

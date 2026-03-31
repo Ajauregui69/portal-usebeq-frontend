@@ -11,7 +11,7 @@ const SERVICIOS = [
   { to: '/avisos',                 title: 'Avisos',                     desc: 'Información relevante para padres',        color: 'from-[#E1A031] to-[#c8891f]',  icon: 'M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9' },
   { to: '/documentos-normativos',  title: 'Documentos Normativos',      desc: 'Acuerdos y normas de control escolar',     color: 'from-orange-500 to-orange-600', icon: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' },
   { to: '/boeva',                  title: 'Verificación de Documentos', desc: 'Verifica autenticidad de boletas',         color: 'from-cyan-500 to-cyan-600',    icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z' },
-  { to: '/becas',                  title: 'Becas',                      desc: 'Información sobre becas disponibles',      color: 'from-purple-500 to-purple-600', icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
+  { to: '/becas',                  title: 'Becas',                      desc: 'Información sobre becas disponibles',      color: 'from-[#E1A031] to-[#c8891f]', icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
   { to: '/buzon-padres',           title: 'Buzón de Padres',            desc: 'Envía documentos y consultas',            color: 'from-rose-500 to-rose-600',    icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
 ];
 
@@ -90,13 +90,13 @@ export default function Dashboard() {
     } catch (error) {
       const detail = error.response?.data?.detail;
       if (error.response?.status === 409) {
-        setLinkError(detail || 'El parentesco seleccionado ya esta vinculado con otra cuenta. Contacte a USEBEQ: epena@usebeq.edu.mx');
+        setLinkError(detail || 'El parentesco seleccionado ya está vinculado con otra cuenta. Contacte a USEBEQ: epena@usebeq.edu.mx');
       } else if (error.response?.status === 404) {
-        setLinkError('No se encontro al estudiante. Verifica que la CURP y el CCT sean correctos.');
+        setLinkError('No se encontró al estudiante. Verifica que la CURP y el CCT sean correctos.');
       } else if (error.response?.status === 400) {
-        setLinkError(detail || 'Este estudiante ya esta vinculado a tu cuenta.');
+        setLinkError(detail || 'Este estudiante ya está vinculado a tu cuenta.');
       } else if (error.response?.status === 503) {
-        setLinkError('El servicio de USEBEQ no esta disponible en este momento. Intenta mas tarde.');
+        setLinkError('El servicio de USEBEQ no está disponible en este momento. Intenta más tarde.');
       } else {
         setLinkError(detail || 'Error al vincular al estudiante. Intenta nuevamente.');
       }
@@ -182,7 +182,7 @@ export default function Dashboard() {
               </div>
               <h2 className="text-xl font-bold text-slate-800 text-center mb-2">Desvincular Estudiante</h2>
               <p className="text-slate-600 text-center mb-6">
-                ¿Estas seguro de desvincular a <strong>{confirmUnlink.name}</strong>? Esta accion no se puede deshacer.
+                ¿Estás seguro de desvincular a <strong>{confirmUnlink.name}</strong>? Esta acción no se puede deshacer.
               </p>
               <div className="flex gap-3">
                 <button
@@ -285,7 +285,7 @@ export default function Dashboard() {
 
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20 hover:shadow-xl transition-shadow">
             <div className="flex items-center gap-4">
-              <div className="p-3 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl shadow-lg">
+              <div className="p-3 bg-gradient-to-br from-[#242B57] to-[#4996C6] rounded-xl shadow-lg">
                 <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
@@ -377,7 +377,7 @@ export default function Dashboard() {
             <ul className="mb-6 space-y-2">
               {pendingSiblings.siblings.map(s => (
                 <li key={s.al_id} className="flex items-center gap-2 bg-[#7CC6D8]/10 border border-[#7CC6D8]/40 rounded-lg px-4 py-2 text-sm text-slate-700 font-medium">
-                  <svg className="w-4 h-4 text-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 text-[#4996C6] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
                   {s.nombre}
@@ -444,7 +444,7 @@ export default function Dashboard() {
                     onChange={(e) => setCurp(e.target.value.toUpperCase())}
                     maxLength={18}
                     required
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent transition-all"
                     placeholder="AAPR160106HQTLRNA6"
                   />
                   <p className="text-xs text-slate-500 mt-1">18 caracteres</p>
@@ -461,7 +461,7 @@ export default function Dashboard() {
                     onChange={(e) => setCct(e.target.value.toUpperCase())}
                     maxLength={20}
                     required
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent transition-all"
                     placeholder="22DPR0200G"
                   />
                   <p className="text-xs text-slate-500 mt-1">Clave del Centro de Trabajo</p>
@@ -475,7 +475,7 @@ export default function Dashboard() {
                     id="relacion"
                     value={relacion}
                     onChange={(e) => setRelacion(e.target.value)}
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent transition-all"
                   >
                     <option value="padre">Padre</option>
                     <option value="madre">Madre</option>
