@@ -9,7 +9,7 @@ const SERVICIOS_MENU = {
     { to: '/faq',                   label: 'Preguntas Frecuentes', icon: 'M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
   ],
   enlaces: [
-    { href: 'https://www.usebeq.edu.mx/PaginaWEB/',                                          label: 'Pagina Oficial USEBEQ',      icon: 'M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9', external: true },
+    { href: 'https://www.usebeq.edu.mx/PaginaWEB/',                                          label: 'Página Oficial USEBEQ',      icon: 'M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9', external: true },
     { href: 'https://www.usebeq.edu.mx/PaginaWeb/Home/MiCorreoInstitucional',                label: 'Mi correo institucional',    icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', external: true },
     { href: 'https://said.usebeq.edu.mx/',                                                   label: 'Preinscripciones',           icon: 'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z', external: true },
     { href: 'https://www.usebeq.edu.mx/PaginaWEB/encuestas/evaluacionServicioSGC',           label: 'Evaluación del Servicio',    icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4', external: true },
@@ -39,23 +39,23 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white/80 backdrop-blur-md shadow-lg border-b border-white/20 sticky top-0 z-50">
+    <nav className="bg-white shadow-md border-b border-slate-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20">
-          {/* Logo */}
+          {/* Logos institucionales */}
           <div className="flex items-center">
-            <Link to="/dashboard" className="flex items-center gap-3 group">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30 group-hover:scale-110 transition-transform">
-                <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
-              </div>
-              <div>
-                <span className="text-2xl font-black bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                  USEBEQ
-                </span>
-                <p className="text-xs text-slate-500 font-medium">Portal de Padres</p>
-              </div>
+            <Link to="/dashboard" className="flex items-center gap-4">
+              <img
+                src="/logos/qro_juntos.png"
+                alt="Querétaro Gobierno del Estado — Juntos, Adelante."
+                className="h-11 w-auto object-contain"
+              />
+              <div className="w-px h-10 bg-slate-300 hidden sm:block" />
+              <img
+                src="/logos/USEBEQN.png"
+                alt="USEBEQ"
+                className="h-9 w-auto object-contain hidden sm:block"
+              />
             </Link>
           </div>
 
@@ -65,7 +65,7 @@ export default function Navbar() {
             <div className="relative" ref={serviciosRef}>
               <button
                 onClick={() => setShowServicios(!showServicios)}
-                className="flex items-center gap-1.5 px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl font-medium transition-all"
+                className="flex items-center gap-1.5 px-4 py-2.5 text-slate-700 hover:bg-[#7CC6D8]/15 hover:text-[#242B57] rounded-xl font-medium transition-all"
               >
                 Servicios
                 <svg className={`w-4 h-4 transition-transform ${showServicios ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -83,7 +83,7 @@ export default function Navbar() {
                         key={item.to}
                         to={item.to}
                         onClick={() => setShowServicios(false)}
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-all"
+                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-slate-700 hover:bg-[#7CC6D8]/15 hover:text-[#242B57] transition-all"
                       >
                         <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
@@ -102,7 +102,7 @@ export default function Navbar() {
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={() => setShowServicios(false)}
-                          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-all"
+                          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-slate-700 hover:bg-[#7CC6D8]/15 hover:text-[#242B57] transition-all"
                         >
                           <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
@@ -117,7 +117,7 @@ export default function Navbar() {
                           key={item.to}
                           to={item.to}
                           onClick={() => setShowServicios(false)}
-                          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-all"
+                          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-slate-700 hover:bg-[#7CC6D8]/15 hover:text-[#242B57] transition-all"
                         >
                           <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
@@ -132,7 +132,7 @@ export default function Navbar() {
             </div>
 
             <div className="flex items-center gap-2 px-4 py-2 bg-slate-50 rounded-xl border border-slate-200">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-[#242B57] rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">
                   {user?.u_nombre?.[0]}{user?.u_appat?.[0]}
                 </span>
@@ -144,7 +144,7 @@ export default function Navbar() {
 
             <Link
               to="/profile"
-              className="flex items-center gap-2 px-4 py-2.5 text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl font-medium transition-all"
+              className="flex items-center gap-2 px-4 py-2.5 text-slate-700 hover:bg-[#7CC6D8]/15 hover:text-[#242B57] rounded-xl font-medium transition-all"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -185,7 +185,7 @@ export default function Navbar() {
           <div className="md:hidden py-4 border-t border-slate-200">
             <div className="space-y-2">
               <div className="flex items-center gap-3 px-4 py-3 bg-slate-50 rounded-xl">
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-[#242B57] rounded-lg flex items-center justify-center">
                   <span className="text-white font-bold">
                     {user?.u_nombre?.[0]}{user?.u_appat?.[0]}
                   </span>
@@ -201,7 +201,7 @@ export default function Navbar() {
               <Link
                 to="/profile"
                 onClick={() => setShowMenu(false)}
-                className="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl font-medium transition-all"
+                className="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-[#7CC6D8]/15 hover:text-[#242B57] rounded-xl font-medium transition-all"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -218,7 +218,7 @@ export default function Navbar() {
                   key={item.to}
                   to={item.to}
                   onClick={() => setShowMenu(false)}
-                  className="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl font-medium transition-all"
+                  className="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-[#7CC6D8]/15 hover:text-[#242B57] rounded-xl font-medium transition-all"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
@@ -239,7 +239,7 @@ export default function Navbar() {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => setShowMenu(false)}
-                    className="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl font-medium transition-all"
+                    className="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-[#7CC6D8]/15 hover:text-[#242B57] rounded-xl font-medium transition-all"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
@@ -251,7 +251,7 @@ export default function Navbar() {
                     key={item.to}
                     to={item.to}
                     onClick={() => setShowMenu(false)}
-                    className="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl font-medium transition-all"
+                    className="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-[#7CC6D8]/15 hover:text-[#242B57] rounded-xl font-medium transition-all"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
