@@ -6,9 +6,9 @@ import useStudentStore from '../store/studentStore';
 import useAuthStore from '../store/authStore';
 
 const SERVICIOS = [
-  { to: '/consulta',               title: 'Consulta e Impresión',      desc: 'Consulta calificaciones por CURP',         color: 'from-teal-500 to-teal-600',    icon: 'M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' },
-  { to: '/faq',                    title: 'Preguntas Frecuentes',       desc: 'Respuestas a dudas comunes',               color: 'from-blue-500 to-blue-600',    icon: 'M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
-  { to: '/avisos',                 title: 'Avisos',                     desc: 'Información relevante para padres',        color: 'from-amber-500 to-amber-600',  icon: 'M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9' },
+  { to: '/consulta',               title: 'Consulta e Impresión',      desc: 'Consulta calificaciones por CURP',         color: 'from-[#4996C6] to-[#242B57]',    icon: 'M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' },
+  { to: '/faq',                    title: 'Preguntas Frecuentes',       desc: 'Respuestas a dudas comunes',               color: 'from-[#242B57] to-[#4996C6]',    icon: 'M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
+  { to: '/avisos',                 title: 'Avisos',                     desc: 'Información relevante para padres',        color: 'from-[#E1A031] to-[#c8891f]',  icon: 'M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9' },
   { to: '/documentos-normativos',  title: 'Documentos Normativos',      desc: 'Acuerdos y normas de control escolar',     color: 'from-orange-500 to-orange-600', icon: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' },
   { to: '/boeva',                  title: 'Verificación de Documentos', desc: 'Verifica autenticidad de boletas',         color: 'from-cyan-500 to-cyan-600',    icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z' },
   { to: '/becas',                  title: 'Becas',                      desc: 'Información sobre becas disponibles',      color: 'from-purple-500 to-purple-600', icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
@@ -137,7 +137,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-[#7CC6D8]/10 to-[#4996C6]/10">
       <Navbar />
 
       {/* Notification */}
@@ -208,7 +208,7 @@ export default function Dashboard() {
         <div className="mb-12">
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-2">
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-[#242B57] to-[#4996C6] bg-clip-text text-transparent mb-2">
                 Bienvenido, {user?.u_nombre || 'Usuario'}
               </h1>
               <p className="text-slate-600 text-lg">
@@ -217,7 +217,7 @@ export default function Dashboard() {
             </div>
             <button
               onClick={() => { setShowAddModal(true); setLinkError(null); }}
-              className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg shadow-blue-500/30 transition-all duration-300 hover:scale-105"
+              className="flex items-center gap-2 bg-gradient-to-r from-[#242B57] to-[#4996C6] hover:from-[#1a1f40] hover:to-[#3a7aaa] text-white px-6 py-3 rounded-xl font-semibold shadow-lg shadow-[#242B57]/30 transition-all duration-300 hover:scale-105"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -255,7 +255,7 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20 hover:shadow-xl transition-shadow">
             <div className="flex items-center gap-4">
-              <div className="p-3 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg">
+              <div className="p-3 bg-gradient-to-br from-[#242B57] to-[#4996C6] rounded-xl shadow-lg">
                 <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
@@ -303,14 +303,14 @@ export default function Dashboard() {
         {/* Students Grid */}
         {isLoading ? (
           <div className="text-center py-20">
-            <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-blue-200 border-t-blue-600"></div>
+            <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-[#7CC6D8]/40 border-t-[#4996C6]"></div>
             <p className="mt-6 text-slate-600 text-lg font-medium">Cargando estudiantes...</p>
           </div>
         ) : students.length === 0 ? (
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-16 text-center border border-white/20">
             <div className="max-w-md mx-auto">
-              <div className="w-24 h-24 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg className="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-24 h-24 bg-gradient-to-br from-[#7CC6D8]/20 to-[#4996C6]/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg className="w-12 h-12 text-[#4996C6]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
               </div>
@@ -322,7 +322,7 @@ export default function Dashboard() {
               </p>
               <button
                 onClick={() => { setShowAddModal(true); setLinkError(null); }}
-                className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-xl font-semibold shadow-lg shadow-blue-500/30 transition-all duration-300 hover:scale-105"
+                className="bg-gradient-to-r from-[#242B57] to-[#4996C6] hover:from-[#1a1f40] hover:to-[#3a7aaa] text-white px-8 py-4 rounded-xl font-semibold shadow-lg shadow-[#242B57]/30 transition-all duration-300 hover:scale-105"
               >
                 Vincular mi primer estudiante
               </button>
@@ -365,8 +365,8 @@ export default function Dashboard() {
       {pendingSiblings && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6">
-            <div className="flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mx-auto mb-4">
-              <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex items-center justify-center w-16 h-16 bg-[#7CC6D8]/20 rounded-full mx-auto mb-4">
+              <svg className="w-8 h-8 text-[#4996C6]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
             </div>
@@ -376,7 +376,7 @@ export default function Dashboard() {
             </p>
             <ul className="mb-6 space-y-2">
               {pendingSiblings.siblings.map(s => (
-                <li key={s.al_id} className="flex items-center gap-2 bg-blue-50 border border-blue-200 rounded-lg px-4 py-2 text-sm text-slate-700 font-medium">
+                <li key={s.al_id} className="flex items-center gap-2 bg-[#7CC6D8]/10 border border-[#7CC6D8]/40 rounded-lg px-4 py-2 text-sm text-slate-700 font-medium">
                   <svg className="w-4 h-4 text-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
@@ -388,7 +388,7 @@ export default function Dashboard() {
               <button
                 onClick={handleConfirmSiblings}
                 disabled={confirmingSiblings}
-                className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:from-gray-400 disabled:to-gray-500 text-white px-4 py-3 rounded-xl font-semibold transition-all"
+                className="flex-1 bg-gradient-to-r from-[#242B57] to-[#4996C6] hover:from-[#1a1f40] hover:to-[#3a7aaa] disabled:from-gray-400 disabled:to-gray-500 text-white px-4 py-3 rounded-xl font-semibold transition-all"
               >
                 {confirmingSiblings ? 'Registrando...' : 'Sí, son hermanos'}
               </button>
@@ -487,7 +487,7 @@ export default function Dashboard() {
                   <button
                     type="submit"
                     disabled={linkingStudent}
-                    className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:from-gray-400 disabled:to-gray-500 text-white px-6 py-3 rounded-xl font-semibold shadow-lg shadow-blue-500/30 transition-all duration-300 hover:scale-105 disabled:hover:scale-100 flex items-center justify-center gap-2"
+                    className="flex-1 bg-gradient-to-r from-[#242B57] to-[#4996C6] hover:from-[#1a1f40] hover:to-[#3a7aaa] disabled:from-gray-400 disabled:to-gray-500 text-white px-6 py-3 rounded-xl font-semibold shadow-lg shadow-[#242B57]/30 transition-all duration-300 hover:scale-105 disabled:hover:scale-100 flex items-center justify-center gap-2"
                   >
                     {linkingStudent ? (
                       <>

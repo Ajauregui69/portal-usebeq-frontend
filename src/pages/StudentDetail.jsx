@@ -29,7 +29,7 @@ export default function StudentDetail() {
         setStudent(response.data);
         setIsLoading(false);
       } catch (err) {
-        setError(err.response?.data?.detail || 'Error al cargar la informacion del estudiante');
+        setError(err.response?.data?.detail || 'Error al cargar la información del estudiante');
         setIsLoading(false);
       }
     };
@@ -93,8 +93,8 @@ export default function StudentDetail() {
   const statusConfig = {
     'I': { label: 'Inscrito', color: 'bg-emerald-100 text-emerald-800 border-emerald-200' },
     'B': { label: 'Baja', color: 'bg-red-100 text-red-800 border-red-200' },
-    'A': { label: 'Con adeudo', color: 'bg-amber-100 text-amber-800 border-amber-200' },
-    'E': { label: 'Egresado', color: 'bg-blue-100 text-blue-800 border-blue-200' },
+    'A': { label: 'Con adeudo', color: 'bg-[#E1A031]/15 text-[#7a5200] border-[#E1A031]/30' },
+    'E': { label: 'Egresado', color: 'bg-[#7CC6D8]/20 text-[#242B57] border-[#7CC6D8]/40' },
   };
 
   const getStatus = (estatus) => {
@@ -106,7 +106,7 @@ export default function StudentDetail() {
   const yearOptions = Array.from({ length: 10 }, (_, i) => currentYear - 1 - i);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-[#7CC6D8]/10 to-[#4996C6]/10">
       <Navbar />
 
       {/* Notification */}
@@ -167,7 +167,7 @@ export default function StudentDetail() {
                 <select
                   value={selectedYear}
                   onChange={(e) => setSelectedYear(parseInt(e.target.value))}
-                  className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-lg font-medium"
+                  className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent transition-all text-lg font-medium"
                 >
                   {yearOptions.map((year) => (
                     <option key={year} value={year}>
@@ -180,7 +180,7 @@ export default function StudentDetail() {
               <div className="flex gap-3">
                 <button
                   onClick={confirmDownloadHistorica}
-                  className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg transition-all duration-300 hover:scale-105"
+                  className="flex-1 bg-[#242B57] hover:bg-[#4996C6] text-white px-6 py-3 rounded-xl font-semibold shadow-lg transition-all duration-300 hover:scale-105"
                 >
                   Descargar
                 </button>
@@ -201,7 +201,7 @@ export default function StudentDetail() {
         <div className="mb-8">
           <button
             onClick={() => navigate('/dashboard')}
-            className="group flex items-center gap-2 text-slate-600 hover:text-blue-600 mb-6 transition-colors"
+            className="group flex items-center gap-2 text-slate-600 hover:text-[#4996C6] mb-6 transition-colors"
           >
             <svg className="w-5 h-5 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -225,21 +225,21 @@ export default function StudentDetail() {
         {/* Loading */}
         {isLoading ? (
           <div className="text-center py-20">
-            <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-blue-200 border-t-blue-600"></div>
-            <p className="mt-6 text-slate-600 text-lg font-medium">Cargando informacion...</p>
+            <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-[#7CC6D8]/30 border-t-[#4996C6]"></div>
+            <p className="mt-6 text-slate-600 text-lg font-medium">Cargando información...</p>
           </div>
         ) : student ? (
           <div className="space-y-6">
             {/* Student Info Card */}
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 overflow-hidden">
               {/* Header */}
-              <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-8 text-white">
+              <div className="bg-[#242B57] p-8 text-white">
                 <div className="flex items-start justify-between">
                   <div>
                     <h1 className="text-3xl font-bold mb-2">
                       {student.Nombre} {student.ApellidoPaterno} {student.ApellidoMaterno}
                     </h1>
-                    <p className="text-blue-100 text-lg">CURP: {student.CURP}</p>
+                    <p className="text-[#7CC6D8] text-lg">CURP: {student.CURP}</p>
                   </div>
                 </div>
               </div>
@@ -247,10 +247,10 @@ export default function StudentDetail() {
               {/* Details */}
               <div className="p-8">
                 <h2 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
-                  <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-[#4996C6]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                   </svg>
-                  Informacion Escolar
+                  Información Escolar
                 </h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -279,9 +279,9 @@ export default function StudentDetail() {
                   </div>
                 </div>
 
-                <div className="mt-6 bg-blue-50 rounded-xl p-5 border border-blue-100">
-                  <p className="text-sm text-blue-600 font-medium mb-1">Matricula del Alumno</p>
-                  <p className="text-lg font-bold text-blue-800">{student.IdAlumno}</p>
+                <div className="mt-6 bg-[#7CC6D8]/10 rounded-xl p-5 border border-[#7CC6D8]/30">
+                  <p className="text-sm text-[#4996C6] font-medium mb-1">Matrícula del Alumno</p>
+                  <p className="text-lg font-bold text-[#242B57]">{student.IdAlumno}</p>
                 </div>
               </div>
             </div>
@@ -289,7 +289,7 @@ export default function StudentDetail() {
             {/* Actions Card */}
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8">
               <h2 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
-                <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-[#4996C6]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
                 Boletas de Calificaciones
@@ -322,7 +322,7 @@ export default function StudentDetail() {
                 <button
                   onClick={handleDownloadHistorica}
                   disabled={downloading}
-                  className="flex items-center justify-center gap-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:from-gray-400 disabled:to-gray-500 text-white px-6 py-4 rounded-xl font-semibold shadow-lg transition-all duration-300 hover:scale-105 disabled:hover:scale-100"
+                  className="flex items-center justify-center gap-3 bg-[#242B57] hover:bg-[#4996C6] disabled:bg-gray-400 text-white px-6 py-4 rounded-xl font-semibold shadow-lg transition-all duration-300 hover:scale-105 disabled:hover:scale-100"
                 >
                   {downloading && downloadType === 'historica' ? (
                     <>
@@ -337,7 +337,7 @@ export default function StudentDetail() {
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                      Descargar Boleta Historica
+                      Descargar Boleta Histórica
                     </>
                   )}
                 </button>

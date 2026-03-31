@@ -77,24 +77,24 @@ export default function RevocacionGrado() {
       setStatusResult({ success: true, data: res.data });
     } catch (err) {
       const detail = err.response?.data?.detail;
-      const message = Array.isArray(detail) ? detail.map(e => e.msg).join('. ') : (typeof detail === 'string' ? detail : 'No se encontro solicitud');
+      const message = Array.isArray(detail) ? detail.map(e => e.msg).join('. ') : (typeof detail === 'string' ? detail : 'No se encontró solicitud');
       setStatusResult({ success: false, message });
     } finally { setIsSearching(false); }
   };
 
-  const statusBadge = { SOLICITADO: 'bg-yellow-100 text-yellow-800', RECHAZADA: 'bg-red-100 text-red-800', APROBADA: 'bg-green-100 text-green-800', CANCELADA: 'bg-gray-100 text-gray-800' };
+  const statusBadge = { SOLICITADO: 'bg-[#E1A031]/15 text-[#7a5200]', RECHAZADA: 'bg-red-100 text-red-800', APROBADA: 'bg-green-100 text-green-800', CANCELADA: 'bg-gray-100 text-gray-800' };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-[#7CC6D8]/10 to-[#4996C6]/10">
       {isAuthenticated && <Navbar />}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-10">
-          <button onClick={() => navigate(isAuthenticated ? '/dashboard' : '/')} className="flex items-center gap-2 text-slate-600 hover:text-blue-600 mb-4 transition-colors">
+          <button onClick={() => navigate(isAuthenticated ? '/dashboard' : '/')} className="flex items-center gap-2 text-slate-600 hover:text-[#4996C6] mb-4 transition-colors">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
             {isAuthenticated ? 'Volver al Panel' : 'Volver al Inicio'}
           </button>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Revocacion de Grado</h1>
-          <p className="text-slate-600 mt-2">Solicita la revocacion (repeticion) de un grado escolar</p>
+          <h1 className="text-3xl font-bold text-[#242B57]">Revocación de Grado</h1>
+          <p className="text-slate-600 mt-2">Solicita la revocación (repetición) de un grado escolar</p>
         </div>
 
         {/* Warning Banner */}
@@ -105,19 +105,19 @@ export default function RevocacionGrado() {
             </div>
             <div>
               <h3 className="text-lg font-bold text-red-800">ADVERTENCIA: Proceso Irreversible</h3>
-              <p className="text-red-700 mt-1">La revocacion de grado implica que el alumno debera repetir el grado escolar completo. Este proceso es <strong>IRREVERSIBLE</strong> una vez aprobado. Asegurese de entender las consecuencias antes de realizar esta solicitud.</p>
+              <p className="text-red-700 mt-1">La revocación de grado implica que el alumno deberá repetir el grado escolar completo. Este proceso es <strong>IRREVERSIBLE</strong> una vez aprobado. Asegurese de entender las consecuencias antes de realizar esta solicitud.</p>
             </div>
           </div>
         </div>
 
         <div className="flex flex-wrap gap-2 mb-8">
           {[
-            { id: 'solicitar', label: 'Solicitar Revocacion' },
+            { id: 'solicitar', label: 'Solicitar Revocación' },
             ...(isAuthenticated ? [{ id: 'mis-solicitudes', label: 'Mis Solicitudes' }] : []),
             { id: 'estatus', label: 'Consultar Estatus' },
           ].map(tab => (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-              className={`px-6 py-3 rounded-xl font-semibold transition-all ${activeTab === tab.id ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/30' : 'bg-white/80 text-slate-600 hover:bg-blue-50 border border-slate-200'}`}>
+              className={`px-6 py-3 rounded-xl font-semibold transition-all ${activeTab === tab.id ? 'bg-[#242B57] text-white shadow-lg shadow-[#242B57]/30' : 'bg-white/80 text-slate-600 hover:bg-[#7CC6D8]/15 border border-slate-200'}`}>
               {tab.label}
             </button>
           ))}
@@ -132,22 +132,22 @@ export default function RevocacionGrado() {
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">CURP del Alumno</label>
                   <input name="curp" value={form.curp} onChange={handleChange} maxLength={18} required placeholder="CURP (18 caracteres)"
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent uppercase" />
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent uppercase" />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">Nombre(s)</label>
                   <input name="nombre_alumno" value={form.nombre_alumno} onChange={handleChange} required
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent" />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">Apellido Paterno</label>
                   <input name="a_paterno" value={form.a_paterno} onChange={handleChange} required
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent" />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">Apellido Materno</label>
                   <input name="a_materno" value={form.a_materno} onChange={handleChange}
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent" />
                 </div>
               </div>
 
@@ -157,27 +157,27 @@ export default function RevocacionGrado() {
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">CCT de la Escuela</label>
                   <input name="cct" value={form.cct} onChange={handleChange} required placeholder="Ej: 22DPR0200G"
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent uppercase" />
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent uppercase" />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">Nombre de la Escuela</label>
                   <input name="nombre_escuela" value={form.nombre_escuela} onChange={handleChange} required
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent" />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">Grado</label>
                   <input name="grado" value={form.grado} onChange={handleChange} required placeholder="Ej: 3"
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent" />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">Grupo</label>
                   <input name="grupo" value={form.grupo} onChange={handleChange} required placeholder="Ej: A"
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent" />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">Turno</label>
                   <select name="turno" value={form.turno} onChange={handleChange}
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent">
                     <option value="MATUTINO">Matutino</option>
                     <option value="VESPERTINO">Vespertino</option>
                     <option value="COMPLETO">Tiempo Completo</option>
@@ -186,32 +186,32 @@ export default function RevocacionGrado() {
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">Ciclo Escolar</label>
                   <input name="ciclo_escolar" value={form.ciclo_escolar} onChange={handleChange} required placeholder="Ej: 2024-2025"
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent" />
                 </div>
               </div>
 
               {/* Motivo y solicitante */}
               <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wide pt-2">Solicitud</h3>
               <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">Motivo de la revocacion</label>
-                <textarea name="motivo" value={form.motivo} onChange={handleChange} rows={4} required placeholder="Explique detalladamente el motivo por el cual solicita la revocacion de grado..."
-                  className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none" />
+                <label className="block text-sm font-semibold text-slate-700 mb-2">Motivo de la revocación</label>
+                <textarea name="motivo" value={form.motivo} onChange={handleChange} rows={4} required placeholder="Explique detalladamente el motivo por el cual solicita la revocación de grado..."
+                  className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent resize-none" />
               </div>
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-2">Nombre del padre/madre/tutor solicitante</label>
                 <input name="nombre_padre" value={form.nombre_padre} onChange={handleChange} required
-                  className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                  className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent" />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Telefono</label>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Teléfono</label>
                   <input name="telefono" value={form.telefono} onChange={handleChange} required
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent" />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">Email</label>
                   <input name="email" type="email" value={form.email} onChange={handleChange} required
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent" />
                 </div>
               </div>
 
@@ -219,13 +219,13 @@ export default function RevocacionGrado() {
                 <label className="flex items-start gap-3 cursor-pointer">
                   <input type="checkbox" checked={confirmed} onChange={(e) => setConfirmed(e.target.checked)}
                     className="mt-1 w-5 h-5 rounded border-red-300 text-red-600 focus:ring-red-500" />
-                  <span className="text-sm text-red-800"><strong>Confirmo que entiendo</strong> que la revocacion de grado es un proceso <strong>IRREVERSIBLE</strong> y que, de ser aprobada, mi hijo(a) debera repetir el grado escolar completo. Acepto la responsabilidad de esta solicitud.</span>
+                  <span className="text-sm text-red-800"><strong>Confirmo que entiendo</strong> que la revocación de grado es un proceso <strong>IRREVERSIBLE</strong> y que, de ser aprobada, mi hijo(a) deberá repetir el grado escolar completo. Acepto la responsabilidad de esta solicitud.</span>
                 </label>
               </div>
 
               <button type="submit" disabled={isSubmitting || !confirmed}
                 className="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 disabled:from-gray-400 disabled:to-gray-500 text-white px-6 py-3 rounded-xl font-semibold shadow-lg transition-all">
-                {isSubmitting ? 'Procesando...' : 'Solicitar Revocacion de Grado'}
+                {isSubmitting ? 'Procesando...' : 'Solicitar Revocación de Grado'}
               </button>
             </form>
             {result && (
@@ -240,7 +240,7 @@ export default function RevocacionGrado() {
         {activeTab === 'mis-solicitudes' && (
           <div className="space-y-4">
             {isLoadingRevocaciones ? (
-              <div className="text-center py-12"><div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-blue-200 border-t-blue-600"></div></div>
+              <div className="text-center py-12"><div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-[#7CC6D8]/30 border-t-[#4996C6]"></div></div>
             ) : misRevocaciones.length === 0 ? (
               <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-12 text-center border border-white/20">
                 <p className="text-slate-600">No tienes solicitudes de revocacion registradas.</p>
@@ -265,14 +265,14 @@ export default function RevocacionGrado() {
             <h2 className="text-xl font-bold text-slate-800 mb-6">Consultar Estatus por Folio</h2>
             <form onSubmit={handleSearch} className="flex gap-3 mb-6">
               <input type="text" value={folio} onChange={(e) => setFolio(e.target.value)} placeholder="Ingresa tu folio"
-                className="flex-1 px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                className="flex-1 px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent" />
               <button type="submit" disabled={isSearching}
-                className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg transition-all">
+                className="bg-[#242B57] hover:bg-[#4996C6] text-white px-8 py-3 rounded-xl font-semibold shadow-lg transition-all">
                 {isSearching ? 'Buscando...' : 'Buscar'}
               </button>
             </form>
             {statusResult && (
-              <div className={`p-6 rounded-xl ${statusResult.success ? 'bg-blue-50 border border-blue-200' : 'bg-red-50 border border-red-200'}`}>
+              <div className={`p-6 rounded-xl ${statusResult.success ? 'bg-[#7CC6D8]/10 border border-[#7CC6D8]/40' : 'bg-red-50 border border-red-200'}`}>
                 {statusResult.success ? (
                   <div className="space-y-2">
                     <div className="flex items-center gap-3 mb-3">

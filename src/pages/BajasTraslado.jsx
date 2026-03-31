@@ -81,22 +81,22 @@ export default function BajasTraslado() {
   const canSubmit = form.curp && form.nombre_alumno && form.a_paterno && form.cct && form.idMotivoBaja;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-[#7CC6D8]/10 to-[#4996C6]/10">
       {isAuthenticated && <Navbar />}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-10">
-          <button onClick={() => navigate(isAuthenticated ? '/dashboard' : '/')} className="flex items-center gap-2 text-slate-600 hover:text-blue-600 mb-4 transition-colors">
+          <button onClick={() => navigate(isAuthenticated ? '/dashboard' : '/')} className="flex items-center gap-2 text-slate-600 hover:text-[#4996C6] mb-4 transition-colors">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
             {isAuthenticated ? 'Volver al Panel' : 'Volver al Inicio'}
           </button>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Bajas por Traslado</h1>
+          <h1 className="text-3xl font-bold text-[#242B57]">Bajas por Traslado</h1>
           <p className="text-slate-600 mt-2">Solicita una baja por traslado para tus estudiantes</p>
         </div>
 
         <div className="flex gap-2 mb-8">
           {[{ id: 'solicitud', label: 'Nueva Solicitud' }, { id: 'estatus', label: 'Consultar Estatus' }].map(tab => (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-              className={`px-6 py-3 rounded-xl font-semibold transition-all ${activeTab === tab.id ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/30' : 'bg-white/80 text-slate-600 hover:bg-blue-50 border border-slate-200'}`}>
+              className={`px-6 py-3 rounded-xl font-semibold transition-all ${activeTab === tab.id ? 'bg-[#242B57] text-white shadow-lg shadow-[#242B57]/30' : 'bg-white/80 text-slate-600 hover:bg-[#7CC6D8]/15 border border-slate-200'}`}>
               {tab.label}
             </button>
           ))}
@@ -104,12 +104,12 @@ export default function BajasTraslado() {
 
         {activeTab === 'solicitud' && (
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-8">
-            <div className="bg-amber-50 border-l-4 border-amber-500 rounded-lg p-4 mb-6">
+            <div className="bg-[#E1A031]/8 border-l-4 border-[#E1A031]/50 rounded-lg p-4 mb-6">
               <div className="flex items-start gap-3">
-                <svg className="w-6 h-6 text-amber-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                <svg className="w-6 h-6 text-[#E1A031] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
                 <div>
-                  <h3 className="font-bold text-amber-800">Aviso importante</h3>
-                  <p className="text-amber-700 text-sm">La baja por traslado es el proceso para cambiar a un estudiante de escuela. Una vez procesada, el estudiante sera dado de baja en su escuela actual.</p>
+                  <h3 className="font-bold text-[#7a5200]">Aviso importante</h3>
+                  <p className="text-[#7a5200] text-sm">La baja por traslado es el proceso para cambiar a un estudiante de escuela. Una vez procesada, el estudiante será dado de baja en su escuela actual.</p>
                 </div>
               </div>
             </div>
@@ -121,22 +121,22 @@ export default function BajasTraslado() {
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">CURP del Alumno</label>
                   <input name="curp" value={form.curp} onChange={handleChange} maxLength={18} required placeholder="CURP (18 caracteres)"
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent uppercase" />
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent uppercase" />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">Nombre(s)</label>
                   <input name="nombre_alumno" value={form.nombre_alumno} onChange={handleChange} required
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent" />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">Apellido Paterno</label>
                   <input name="a_paterno" value={form.a_paterno} onChange={handleChange} required
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent" />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">Apellido Materno</label>
                   <input name="a_materno" value={form.a_materno} onChange={handleChange}
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent" />
                 </div>
               </div>
 
@@ -146,27 +146,27 @@ export default function BajasTraslado() {
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">CCT de la Escuela</label>
                   <input name="cct" value={form.cct} onChange={handleChange} required placeholder="Ej: 22DPR0200G"
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent uppercase" />
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent uppercase" />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">Nombre de la Escuela</label>
                   <input name="nombre_escuela" value={form.nombre_escuela} onChange={handleChange}
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent" />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">Grado</label>
                   <input name="grado" value={form.grado} onChange={handleChange} placeholder="Ej: 3"
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent" />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">Grupo</label>
                   <input name="grupo" value={form.grupo} onChange={handleChange} placeholder="Ej: A"
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent" />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">Turno</label>
                   <select name="turno" value={form.turno} onChange={handleChange}
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent">
                     <option value="MATUTINO">Matutino</option>
                     <option value="VESPERTINO">Vespertino</option>
                     <option value="COMPLETO">Tiempo Completo</option>
@@ -175,7 +175,7 @@ export default function BajasTraslado() {
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">Ciclo Escolar</label>
                   <input name="ciclo_escolar" value={form.ciclo_escolar} onChange={handleChange} placeholder="Ej: 2024-2025"
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent" />
                 </div>
               </div>
 
@@ -184,7 +184,7 @@ export default function BajasTraslado() {
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-2">Motivo</label>
                 <select name="idMotivoBaja" value={form.idMotivoBaja} onChange={handleChange} required
-                  className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                  className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent">
                   <option value="">-- Seleccionar motivo --</option>
                   {tiposBaja.map(t => (
                     <option key={t.Id} value={t.Id}>{t.Descripcion}</option>
@@ -211,14 +211,14 @@ export default function BajasTraslado() {
             <h2 className="text-xl font-bold text-slate-800 mb-6">Consultar Estatus de Baja</h2>
             <form onSubmit={handleSearch} className="flex gap-3">
               <input type="text" value={folio} onChange={(e) => setFolio(e.target.value)} placeholder="Ingresa tu folio de solicitud"
-                className="flex-1 px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" />
+                className="flex-1 px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4996C6] focus:border-transparent transition-all" />
               <button type="submit" disabled={isSearching}
-                className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-3 rounded-xl font-semibold shadow-lg transition-all">
+                className="bg-[#242B57] hover:bg-[#4996C6] text-white px-8 py-3 rounded-xl font-semibold shadow-lg transition-all">
                 {isSearching ? 'Buscando...' : 'Buscar'}
               </button>
             </form>
             {statusResult && (
-              <div className={`mt-6 p-4 rounded-xl ${statusResult.success ? 'bg-blue-50 border border-blue-200' : 'bg-red-50 border border-red-200 text-red-800'}`}>
+              <div className={`mt-6 p-4 rounded-xl ${statusResult.success ? 'bg-[#7CC6D8]/10 border border-[#7CC6D8]/40' : 'bg-red-50 border border-red-200 text-red-800'}`}>
                 {statusResult.success ? (
                   <pre className="text-sm text-slate-700 whitespace-pre-wrap">{JSON.stringify(statusResult.data, null, 2)}</pre>
                 ) : (
@@ -240,7 +240,7 @@ export default function BajasTraslado() {
             <p className="text-slate-600 text-center text-sm mb-2">
               <strong>{form.nombre_alumno} {form.a_paterno} {form.a_materno}</strong>
             </p>
-            <p className="text-slate-600 text-center mb-6">¿Estas seguro de solicitar la baja por traslado? Esta accion no se puede deshacer facilmente.</p>
+            <p className="text-slate-600 text-center mb-6">¿Estás seguro de solicitar la baja por traslado? Esta acción no se puede deshacer fácilmente.</p>
             <div className="flex gap-3">
               <button onClick={handleSubmit} disabled={isSubmitting}
                 className="flex-1 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-semibold transition-all">
