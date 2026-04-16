@@ -52,7 +52,7 @@ export default function Navbar() {
               />
               <div className="w-px h-10 bg-slate-300 hidden lg:block" />
               <img
-                src="/logos/USEBEQN.png"
+                src="/logos/USEBEQN_sin_margen.png"
                 alt="USEBEQ"
                 className="h-9 w-auto object-contain hidden lg:block"
               />

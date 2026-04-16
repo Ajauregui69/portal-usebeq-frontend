@@ -58,7 +58,7 @@ export default function LandingPage() {
               />
               <div className="w-px h-10 bg-slate-300 hidden lg:block" />
               <img
-                src="/logos/USEBEQN.png"
+                src="/logos/USEBEQN_sin_margen.png"
                 alt="Unidad de Servicios para la Educación Básica en el Estado de Querétaro"
                 className="h-10 w-auto object-contain hidden lg:block"
               />
@@ -144,13 +144,13 @@ export default function LandingPage() {
               <div className="relative">
                 <div className="w-96 bg-[#242B57] rounded-3xl shadow-2xl p-10 flex flex-col items-center gap-6">
                   <img
-                    src="/logos/qro_juntos.png"
+                    src="/logos/qro_juntos_blanco.png"
                     alt="Querétaro Gobierno del Estado"
-                    className="w-56 object-contain brightness-0 invert"
+                    className="w-56 object-contain"
                   />
                   <div className="w-16 h-px bg-white/30" />
                   <img
-                    src="/logos/USEBEQN.png"
+                    src="/logos/USEBEQN_sin_margen.png"
                     alt="USEBEQ"
                     className="w-64 object-contain brightness-0 invert"
                   />
@@ -353,7 +353,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             <div>
-              <img src="/logos/USEBEQN.png" alt="USEBEQ" className="h-12 w-auto mb-4 brightness-0 invert opacity-90" />
+              <img src="/logos/USEBEQN_sin_margen.png" alt="USEBEQ" className="h-12 w-auto mb-4 brightness-0 invert opacity-90" />
               <p className="text-slate-300 text-sm leading-relaxed mt-4">
                 Somos un organismo público descentralizado, con personalidad jurídica y patrimonio propio,
                 que tiene por objeto la aplicación, administración y coordinación operativa del Sistema de
@@ -379,7 +379,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="mt-12 pt-8 border-t border-white/10 text-center">
-            <img src="/logos/qro_juntos.png" alt="Querétaro Gobierno del Estado" className="h-8 w-auto mx-auto mb-4 brightness-0 invert opacity-60" />
+            <img src="/logos/qro_juntos_blanco.png" alt="Querétaro Gobierno del Estado" className="h-8 w-auto mx-auto mb-4 opacity-70" />
             <p className="text-slate-400 text-sm">&copy; {new Date().getFullYear()} USEBEQ — Portal de Padres de Familia</p>
           </div>
         </div>
