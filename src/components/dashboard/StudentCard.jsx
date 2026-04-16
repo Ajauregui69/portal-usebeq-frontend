@@ -240,7 +240,7 @@ export default function StudentCard({ student, onUnlink, onNotification }) {
               <button
                 onClick={() => setShowBoletaMenu(true)}
                 disabled={downloading}
-                className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white px-4 py-3 rounded-xl text-sm font-semibold shadow-md transition-all duration-300 flex items-center justify-center gap-2"
+                className="w-full bg-[#4996C6] hover:bg-[#242B57] disabled:bg-gray-400 text-white px-4 py-3 rounded-xl text-sm font-semibold shadow-md transition-all duration-300 flex items-center justify-center gap-2"
               >
                 {downloading ? (
                   <>
@@ -263,7 +263,7 @@ export default function StudentCard({ student, onUnlink, onNotification }) {
               <div className="space-y-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
                 <button
                   onClick={() => handleDownloadBoleta(false)}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all flex items-center justify-center gap-2"
+                  className="w-full bg-[#4996C6] hover:bg-[#242B57] text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all flex items-center justify-center gap-2"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3" />

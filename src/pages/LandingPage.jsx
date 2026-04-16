@@ -20,12 +20,12 @@ export default function LandingPage() {
     { to: '/consulta',               title: 'Consulta e Impresión',      desc: 'Consulta calificaciones por CURP del estudiante',          color: 'from-[#4996C6] to-[#242B57]', icon: 'M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' },
     { to: '/documentos-normativos',  title: 'Documentos Normativos',     desc: 'Acuerdos y normas de control escolar',                     color: 'from-[#7CC6D8] to-[#4996C6]', icon: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' },
     { to: '/boeva',                  title: 'Verificación de Documentos', desc: 'Verifica la autenticidad de boletas',                      color: 'from-[#242B57] to-[#4996C6]', icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z' },
-    { to: '/becas',                  title: 'Becas',                     desc: 'Información sobre becas disponibles',                      color: 'from-[#E1A031] to-[#c8891f]',  icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
+    { to: '/becas',                  title: 'Becas',                     desc: 'Información sobre becas disponibles',                      color: 'from-[#242B57] to-[#4996C6]',  icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
     { to: '/buzon-padres',           title: 'Buzón de Padres',           desc: 'Envía documentos y consultas',                             color: 'from-[#4996C6] to-[#7CC6D8]', icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
   ];
 
   const tramites = [
-    { to: '/bajas-traslado',        title: 'Baja por Traslado',         desc: 'Solicita baja por cambio de escuela',                      color: 'from-red-500 to-red-600',      icon: 'M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4' },
+    { to: '/bajas-traslado',        title: 'Baja por Traslado',         desc: 'Solicita baja por cambio de escuela',                      color: 'from-[#707F8F] to-[#4996C6]',  icon: 'M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4' },
     { to: '/duplicado-certificado', title: 'Duplicado de Certificado',  desc: 'Reimpresión de certificados oficiales',                    color: 'from-[#4996C6] to-[#242B57]', icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4' },
     { to: '/soluciones-en-linea',   title: 'Solicitudes en Línea',      desc: 'Trámites y solicitudes digitales',                         color: 'from-[#242B57] to-[#4996C6]', icon: 'M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9' },
     { to: '/revocacion-grado',      title: 'Revocación de Grado',       desc: 'Solicita repetición de grado escolar',                     color: 'from-[#242B57] to-[#4996C6]', icon: 'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15' },
@@ -54,18 +54,18 @@ export default function LandingPage() {
               <img
                 src="/logos/qro_juntos.png"
                 alt="Querétaro Gobierno del Estado — Juntos, Adelante."
-                className="h-12 w-auto object-contain"
+                className="h-14 w-auto object-contain"
               />
-              <div className="w-px h-10 bg-slate-300 hidden sm:block" />
+              <div className="w-px h-10 bg-slate-300 hidden lg:block" />
               <img
                 src="/logos/USEBEQN.png"
                 alt="Unidad de Servicios para la Educación Básica en el Estado de Querétaro"
-                className="h-10 w-auto object-contain hidden sm:block"
+                className="h-10 w-auto object-contain hidden lg:block"
               />
             </Link>
 
             {/* Desktop links */}
-            <div className="hidden md:flex items-center gap-4">
+            <div className="hidden lg:flex items-center gap-4">
               <a href="#avisos"    className="text-slate-600 hover:text-[#4996C6] font-medium transition-colors text-sm">Avisos</a>
               <a href="#servicios" className="text-slate-600 hover:text-[#4996C6] font-medium transition-colors text-sm">Servicios</a>
               <a href="#tramites"  className="text-slate-600 hover:text-[#4996C6] font-medium transition-colors text-sm">Trámites</a>
@@ -81,8 +81,8 @@ export default function LandingPage() {
               )}
             </div>
 
-            {/* Mobile button */}
-            <div className="md:hidden flex items-center">
+            {/* Mobile / Tablet button */}
+            <div className="lg:hidden flex items-center">
               {isAuthenticated ? (
                 <Link to="/dashboard" className="bg-[#242B57] text-white px-4 py-2 rounded-xl font-semibold text-sm">
                   Tablero
@@ -107,7 +107,7 @@ export default function LandingPage() {
               <img
                 src="/logos/portal_padres.png"
                 alt="Portal para Padres de Familia"
-                className="h-24 w-auto mb-8"
+                className="h-20 sm:h-24 w-auto max-w-full object-contain mb-8"
               />
               <p className="text-xl text-slate-600 mb-3 leading-relaxed">
                 Accede a calificaciones, certificados, trámites y más.

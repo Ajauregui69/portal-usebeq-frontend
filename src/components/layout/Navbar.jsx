@@ -48,19 +48,19 @@ export default function Navbar() {
               <img
                 src="/logos/qro_juntos.png"
                 alt="Querétaro Gobierno del Estado — Juntos, Adelante."
-                className="h-11 w-auto object-contain"
+                className="h-14 w-auto object-contain"
               />
-              <div className="w-px h-10 bg-slate-300 hidden sm:block" />
+              <div className="w-px h-10 bg-slate-300 hidden lg:block" />
               <img
                 src="/logos/USEBEQN.png"
                 alt="USEBEQ"
-                className="h-9 w-auto object-contain hidden sm:block"
+                className="h-9 w-auto object-contain hidden lg:block"
               />
             </Link>
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-3">
             {/* Servicios Dropdown */}
             <div className="relative" ref={serviciosRef}>
               <button
@@ -163,8 +163,8 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center">
+          {/* Mobile / Tablet Menu Button */}
+          <div className="lg:hidden flex items-center">
             <button
               onClick={() => setShowMenu(!showMenu)}
               className="p-2 rounded-xl text-slate-600 hover:bg-slate-100 transition-colors"
@@ -180,9 +180,9 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile / Tablet Menu */}
         {showMenu && (
-          <div className="md:hidden py-4 border-t border-slate-200">
+          <div className="lg:hidden py-4 border-t border-slate-200">
             <div className="space-y-2">
               <div className="flex items-center gap-3 px-4 py-3 bg-slate-50 rounded-xl">
                 <div className="w-10 h-10 bg-[#242B57] rounded-lg flex items-center justify-center">
