@@ -410,7 +410,15 @@ export default function LandingPage() {
                   {new Date(selectedAviso.created_at).toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' })}
                 </p>
               )}
-              {selectedAviso.imagen_url && <img src={selectedAviso.imagen_url} alt="" className="w-full rounded-xl mb-4" />}
+              {selectedAviso.imagen_url && (
+                selectedAviso.link_url ? (
+                  <a href={selectedAviso.link_url} target="_blank" rel="noopener noreferrer" title="Abrir enlace del aviso">
+                    <img src={selectedAviso.imagen_url} alt="" className="w-full rounded-xl mb-4 hover:opacity-90 transition-opacity" />
+                  </a>
+                ) : (
+                  <img src={selectedAviso.imagen_url} alt="" className="w-full rounded-xl mb-4" />
+                )
+              )}
               <p className="text-slate-700 leading-relaxed whitespace-pre-wrap">{selectedAviso.contenido}</p>
             </div>
           </div>
