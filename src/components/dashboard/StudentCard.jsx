@@ -185,20 +185,12 @@ export default function StudentCard({ student, onUnlink, onNotification }) {
               </h4>
               <div className="grid grid-cols-2 gap-3">
                 <div className="bg-slate-50 rounded-xl p-3 border border-slate-100">
-                  <p className="text-xs text-slate-500 font-medium mb-1">Nivel</p>
-                  <p className="text-sm font-bold text-slate-800">{current_enrollment.nivel}</p>
-                </div>
-                <div className="bg-slate-50 rounded-xl p-3 border border-slate-100">
                   <p className="text-xs text-slate-500 font-medium mb-1">Grado</p>
                   <p className="text-sm font-bold text-slate-800">{current_enrollment.eg_grado}°</p>
                 </div>
                 <div className="bg-slate-50 rounded-xl p-3 border border-slate-100">
                   <p className="text-xs text-slate-500 font-medium mb-1">Grupo</p>
                   <p className="text-sm font-bold text-slate-800">{current_enrollment.eg_grupo}</p>
-                </div>
-                <div className="bg-slate-50 rounded-xl p-3 border border-slate-100">
-                  <p className="text-xs text-slate-500 font-medium mb-1">Ciclo</p>
-                  <p className="text-sm font-bold text-slate-800">{current_enrollment.ciclo_escolar}</p>
                 </div>
               </div>
             </div>
