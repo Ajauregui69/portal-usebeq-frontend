@@ -96,8 +96,10 @@ export default function StudentCard({ student, onUnlink, onNotification }) {
     handleDownloadBoleta(true, selectedYear);
   };
 
+  // Las boletas historicas estan disponibles desde el ciclo 2019-2020
+  const OLDEST_BOLETA_YEAR = 2019;
   const currentYear = new Date().getFullYear();
-  const yearOptions = Array.from({ length: 10 }, (_, i) => currentYear - 1 - i);
+  const yearOptions = Array.from({ length: currentYear - OLDEST_BOLETA_YEAR }, (_, i) => currentYear - 1 - i);
 
   return (
     <>
