@@ -8,6 +8,13 @@ export default function LandingPage() {
   const [faqOpen, setFaqOpen] = useState(null);
   const [avisos, setAvisos] = useState([]);
   const [avisosLoading, setAvisosLoading] = useState(true);
+  const [selectedAviso, setSelectedAviso] = useState(null);
+
+  const avisoTipoConfig = {
+    urgent:  { border: 'border-red-200',    bg: 'bg-red-50',   icon: 'text-red-500',    iconBg: 'bg-red-100',    badge: 'bg-red-100 text-red-700',    label: 'Urgente'    },
+    warning: { border: 'border-[#E1A031]/35',  bg: 'bg-[#E1A031]/8', icon: 'text-[#c8891f]',  iconBg: 'bg-[#E1A031]/15',  badge: 'bg-[#E1A031]/15 text-[#7a5200]', label: 'Importante' },
+    info:    { border: 'border-[#7CC6D8]/40', bg: 'bg-white',  icon: 'text-[#4996C6]', iconBg: 'bg-[#7CC6D8]/20', badge: 'bg-[#7CC6D8]/20 text-[#242B57]', label: 'Aviso' },
+  };
 
   useEffect(() => {
     announcementsAPI.getActive()
@@ -203,14 +210,10 @@ export default function LandingPage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {avisos.map((aviso) => {
-                const tipoConfig = {
-                  urgent:  { border: 'border-red-200',    bg: 'bg-red-50',   icon: 'text-red-500',    iconBg: 'bg-red-100',    badge: 'bg-red-100 text-red-700',    label: 'Urgente'    },
-                  warning: { border: 'border-[#E1A031]/35',  bg: 'bg-[#E1A031]/8', icon: 'text-[#c8891f]',  iconBg: 'bg-[#E1A031]/15',  badge: 'bg-[#E1A031]/15 text-[#7a5200]', label: 'Importante' },
-                  info:    { border: 'border-[#7CC6D8]/40', bg: 'bg-white',  icon: 'text-[#4996C6]', iconBg: 'bg-[#7CC6D8]/20', badge: 'bg-[#7CC6D8]/20 text-[#242B57]', label: 'Aviso' },
-                };
-                const t = tipoConfig[aviso.tipo] || tipoConfig.info;
+                const t = avisoTipoConfig[aviso.tipo] || avisoTipoConfig.info;
                 return (
-                  <div key={aviso.id} className={`rounded-2xl shadow-md border ${t.border} ${t.bg} p-6 hover:shadow-lg transition-all duration-300`}>
+                  <div key={aviso.id} onClick={() => setSelectedAviso(aviso)}
+                    className={`rounded-2xl shadow-md border ${t.border} ${t.bg} p-6 hover:shadow-lg transition-all duration-300 cursor-pointer`}>
                     <div className="flex items-start gap-3">
                       <div className="flex-shrink-0 mt-0.5">
                         <div className={`w-8 h-8 ${t.iconBg} rounded-lg flex items-center justify-center`}>
@@ -224,12 +227,15 @@ export default function LandingPage() {
                           <h3 className="font-bold text-slate-800 text-sm leading-snug">{aviso.titulo}</h3>
                           <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${t.badge}`}>{t.label}</span>
                         </div>
-                        <p className="text-slate-600 text-sm leading-relaxed">{aviso.contenido}</p>
-                        {aviso.created_at && (
-                          <p className="text-xs text-slate-400 mt-2">
-                            {new Date(aviso.created_at).toLocaleDateString('es-MX', { day: '2-digit', month: 'long', year: 'numeric' })}
-                          </p>
-                        )}
+                        <p className="text-slate-600 text-sm leading-relaxed line-clamp-3">{aviso.contenido}</p>
+                        <div className="flex items-center justify-between mt-2">
+                          {aviso.created_at && (
+                            <p className="text-xs text-slate-400">
+                              {new Date(aviso.created_at).toLocaleDateString('es-MX', { day: '2-digit', month: 'long', year: 'numeric' })}
+                            </p>
+                          )}
+                          <span className="text-xs font-semibold text-[#4996C6]">Ver más</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -384,6 +390,32 @@ export default function LandingPage() {
           </div>
         </div>
       </footer>
+
+      {/* Modal de detalle de aviso */}
+      {selectedAviso && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4" onClick={() => setSelectedAviso(null)}>
+          <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[80vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <span className={`px-3 py-1 text-xs font-semibold rounded-full ${(avisoTipoConfig[selectedAviso.tipo] || avisoTipoConfig.info).badge}`}>
+                  {(avisoTipoConfig[selectedAviso.tipo] || avisoTipoConfig.info).label}
+                </span>
+                <button onClick={() => setSelectedAviso(null)} className="text-slate-400 hover:text-slate-600">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+              </div>
+              <h2 className="text-2xl font-bold text-slate-800 mb-2">{selectedAviso.titulo}</h2>
+              {selectedAviso.created_at && (
+                <p className="text-xs text-slate-500 mb-4">
+                  {new Date(selectedAviso.created_at).toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' })}
+                </p>
+              )}
+              {selectedAviso.imagen_url && <img src={selectedAviso.imagen_url} alt="" className="w-full rounded-xl mb-4" />}
+              <p className="text-slate-700 leading-relaxed whitespace-pre-wrap">{selectedAviso.contenido}</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
